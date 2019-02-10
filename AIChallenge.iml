@@ -8,9 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library>
+      <library name="gson-2.3.1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../battle/AIC19-Client-Java-1.0.1/lib/gson-2.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/gson-2.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
