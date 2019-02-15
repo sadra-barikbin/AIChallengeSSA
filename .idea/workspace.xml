@@ -2,44 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f19f4e2-6a27-4fe2-8f89-b8c0653b20b9" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/AbstractAI.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/AiFactory.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/LessSimpleAI.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/Qai/State.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/Qai/Table.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/Qai/Tuple.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/RandomAI.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/SimpleAI.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/gson_2_3_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_3_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/Tactic.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/AIChallenge.iml" afterPath="$PROJECT_DIR$/AIChallenge.iml" />
+      <change beforePath="$PROJECT_DIR$/src/ai/LessSimpleAI.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/ai/Qai/State.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/ai/Qai/Table.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/ai/Qai/Tuple.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/ai/SimpleAI.java" afterPath="$PROJECT_DIR$/src/ai/SimpleAI.java" />
       <change beforePath="$PROJECT_DIR$/src/client/AI.java" afterPath="$PROJECT_DIR$/src/client/AI.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/Controller.java" afterPath="$PROJECT_DIR$/src/client/Controller.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/Main.java" afterPath="$PROJECT_DIR$/src/client/Main.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/Network.java" afterPath="$PROJECT_DIR$/src/client/Network.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Ability.java" afterPath="$PROJECT_DIR$/src/client/model/Ability.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/AbilityConstants.java" afterPath="$PROJECT_DIR$/src/client/model/AbilityConstants.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/AbilityName.java" afterPath="$PROJECT_DIR$/src/client/model/AbilityName.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/AbilityType.java" afterPath="$PROJECT_DIR$/src/client/model/AbilityType.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/CastAbility.java" afterPath="$PROJECT_DIR$/src/client/model/CastAbility.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Cell.java" afterPath="$PROJECT_DIR$/src/client/model/Cell.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Direction.java" afterPath="$PROJECT_DIR$/src/client/model/Direction.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Game.java" afterPath="$PROJECT_DIR$/src/client/model/Game.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/GameConstants.java" afterPath="$PROJECT_DIR$/src/client/model/GameConstants.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/GameEvent.java" afterPath="$PROJECT_DIR$/src/client/model/GameEvent.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Hero.java" afterPath="$PROJECT_DIR$/src/client/model/Hero.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/HeroConstants.java" afterPath="$PROJECT_DIR$/src/client/model/HeroConstants.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/HeroName.java" afterPath="$PROJECT_DIR$/src/client/model/HeroName.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/InitJson.java" afterPath="$PROJECT_DIR$/src/client/model/InitJson.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Map.java" afterPath="$PROJECT_DIR$/src/client/model/Map.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Pair.java" afterPath="$PROJECT_DIR$/src/client/model/Pair.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/Phase.java" afterPath="$PROJECT_DIR$/src/client/model/Phase.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/model/World.java" afterPath="$PROJECT_DIR$/src/client/model/World.java" />
-      <change beforePath="$PROJECT_DIR$/src/common/model/Event.java" afterPath="$PROJECT_DIR$/src/common/model/Event.java" />
-      <change beforePath="$PROJECT_DIR$/src/common/network/Json.java" afterPath="$PROJECT_DIR$/src/common/network/Json.java" />
-      <change beforePath="$PROJECT_DIR$/src/common/network/JsonSocket.java" afterPath="$PROJECT_DIR$/src/common/network/JsonSocket.java" />
-      <change beforePath="$PROJECT_DIR$/src/common/network/data/Message.java" afterPath="$PROJECT_DIR$/src/common/network/data/Message.java" />
-      <change beforePath="$PROJECT_DIR$/src/common/util/Log.java" afterPath="$PROJECT_DIR$/src/common/util/Log.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,58 +21,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/AI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="24" column="37" lean-forward="true" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+            <state relative-caret-position="291">
+              <caret line="16" column="37" lean-forward="false" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#245#246#0" expanded="true" />
-                <element signature="e#310#311#0" expanded="true" />
-                <element signature="e#355#356#0" expanded="true" />
-                <element signature="e#410#411#0" expanded="true" />
-                <element signature="e#455#456#0" expanded="true" />
-                <element signature="e#510#511#0" expanded="true" />
-                <element signature="e#553#554#0" expanded="true" />
-                <element signature="e#610#611#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="State.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ai/Qai/State.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
-              <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Table.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/Qai/Table.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tuple.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/Qai/Tuple.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-              <folding>
-                <element signature="e#176#177#0" expanded="true" />
-                <element signature="e#201#202#0" expanded="true" />
-                <element signature="e#225#226#0" expanded="true" />
-                <element signature="e#250#251#0" expanded="true" />
+                <element signature="e#204#205#0" expanded="true" />
+                <element signature="e#269#270#0" expanded="true" />
+                <element signature="e#314#315#0" expanded="true" />
+                <element signature="e#369#370#0" expanded="true" />
+                <element signature="e#414#415#0" expanded="true" />
+                <element signature="e#469#470#0" expanded="true" />
+                <element signature="e#512#513#0" expanded="true" />
+                <element signature="e#569#570#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,27 +54,21 @@
       <file leaf-file-name="SimpleAI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ai/SimpleAI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="41" />
+            <state relative-caret-position="316">
+              <caret line="58" column="46" lean-forward="true" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#304#305#0" expanded="true" />
-                <element signature="e#372#373#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LessSimpleAI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/LessSimpleAI.java">
+      <file leaf-file-name="Tactic.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/Tactic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#285#286#0" expanded="true" />
-                <element signature="e#353#354#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="88">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -169,7 +96,7 @@
       <file leaf-file-name="RandomAI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ai/RandomAI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-282">
+            <state relative-caret-position="176">
               <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -189,6 +116,7 @@
         <option value="GuiceNewModule" />
         <option value="Singleton" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -225,12 +153,13 @@
         <option value="$PROJECT_DIR$/src/ai/AbstractAI.java" />
         <option value="$PROJECT_DIR$/src/ai/RandomAI.java" />
         <option value="$PROJECT_DIR$/src/ai/AiFactory.java" />
-        <option value="$PROJECT_DIR$/src/ai/SimpleAI.java" />
-        <option value="$PROJECT_DIR$/src/client/AI.java" />
         <option value="$PROJECT_DIR$/src/ai/Qai/Tuple.java" />
         <option value="$PROJECT_DIR$/src/ai/Qai/Table.java" />
         <option value="$PROJECT_DIR$/src/ai/LessSimpleAI.java" />
         <option value="$PROJECT_DIR$/src/ai/Qai/State.java" />
+        <option value="$PROJECT_DIR$/src/ai/Tactic.java" />
+        <option value="$PROJECT_DIR$/src/ai/SimpleAI.java" />
+        <option value="$PROJECT_DIR$/src/client/AI.java" />
       </list>
     </option>
   </component>
@@ -270,6 +199,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="AIChallenge" type="cbb8eebc:String" user="AIChallenge" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="AIChallenge" type="cbb8eebc:String" user="AIChallenge" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -292,13 +238,6 @@
               <item name="AIChallenge" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ai" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AIChallenge" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AIChallenge" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ai" type="462c0819:PsiDirectoryNode" />
-              <item name="Qai" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AIChallenge" type="b2602c69:ProjectViewProjectNode" />
@@ -335,24 +274,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="AIChallenge" type="cbb8eebc:String" user="AIChallenge" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="AIChallenge" type="cbb8eebc:String" user="AIChallenge" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -491,12 +413,13 @@
       <workItem from="1549979092800" duration="2284000" />
       <workItem from="1550079463159" duration="5918000" />
       <workItem from="1550162079819" duration="8807000" />
-      <workItem from="1550226065139" duration="6859000" />
+      <workItem from="1550226065139" duration="7021000" />
+      <workItem from="1550248217380" duration="5731000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41101000" />
+    <option name="totallyTimeSpent" value="46994000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -511,7 +434,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2753404" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27987897" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -535,13 +458,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/client/model/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Network.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1100">
@@ -572,14 +488,14 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#310#311#0" expanded="true" />
-            <element signature="e#355#356#0" expanded="true" />
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#455#456#0" expanded="true" />
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#553#554#0" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
+            <element signature="e#204#205#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#369#370#0" expanded="true" />
+            <element signature="e#414#415#0" expanded="true" />
+            <element signature="e#469#470#0" expanded="true" />
+            <element signature="e#512#513#0" expanded="true" />
+            <element signature="e#569#570#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -647,14 +563,14 @@
           <caret line="42" column="25" lean-forward="false" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#310#311#0" expanded="true" />
-            <element signature="e#355#356#0" expanded="true" />
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#455#456#0" expanded="true" />
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#553#554#0" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
+            <element signature="e#204#205#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#369#370#0" expanded="true" />
+            <element signature="e#414#415#0" expanded="true" />
+            <element signature="e#469#470#0" expanded="true" />
+            <element signature="e#512#513#0" expanded="true" />
+            <element signature="e#569#570#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -851,7 +767,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/RandomAI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-282">
+        <state relative-caret-position="176">
           <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -861,34 +777,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/AI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="24" column="37" lean-forward="true" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#310#311#0" expanded="true" />
-            <element signature="e#355#356#0" expanded="true" />
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#455#456#0" expanded="true" />
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#553#554#0" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/Qai/Tuple.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
-          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-          <folding>
-            <element signature="e#176#177#0" expanded="true" />
-            <element signature="e#201#202#0" expanded="true" />
-            <element signature="e#225#226#0" expanded="true" />
-            <element signature="e#250#251#0" expanded="true" />
-          </folding>
+          <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -896,49 +789,66 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/Qai/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
+        <state relative-caret-position="198">
           <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/SimpleAI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#304#305#0" expanded="true" />
-            <element signature="e#372#373#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/LessSimpleAI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#285#286#0" expanded="true" />
-            <element signature="e#353#354#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="264">
+          <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/Qai/State.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+        <state relative-caret-position="726">
+          <caret line="33" column="1" lean-forward="false" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/Tactic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/SimpleAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="58" column="46" lean-forward="true" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/AI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="16" column="37" lean-forward="false" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#204#205#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#369#370#0" expanded="true" />
+            <element signature="e#414#415#0" expanded="true" />
+            <element signature="e#469#470#0" expanded="true" />
+            <element signature="e#512#513#0" expanded="true" />
+            <element signature="e#569#570#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,20 +1,21 @@
 package ai;
 
 import client.model.*;
+import client.model.Map;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
 made by Sadra
  **/
 public class SimpleAI implements AbstractAI {
     private Random random = new Random();
+    private java.util.Map<Integer,Cell> heroesPositionalAims;
+    private Tactic tactic;
     @Override
     public void preProcess(World world) {
         System.out.println("preProcess in simpleAI started");
+        tactic=Tactic.GETTING_TO_OBJ_ZONE;
     }
 
     @Override
@@ -28,22 +29,39 @@ public class SimpleAI implements AbstractAI {
         System.out.println("move started");
         Hero[] heroes = world.getMyHeroes();
         Cell[] objZone=world.getMap().getObjectiveZone();
+        if (world.getCurrentTurn()==4 && world.getMovePhaseNum()==0){
+            heroesPositionalAims=new HashMap<>();
+            for (Hero h:heroes){
+                heroesPositionalAims.put(h.getId(),objZone[random.nextInt(objZone.length)]);
+            }
+        }
+        int inObjZoneHeroesCnt=0;
         for (Hero hero : heroes)
         {
-            if (hero.getName()==HeroName.GUARDIAN && world.getMovePhaseNum()!=1)
-                continue;
-            if (hero.getName()==HeroName.BLASTER&& world.getMovePhaseNum()%4!=0)
-                continue;
-            if (hero.getName()==HeroName.SENTRY && world.getMovePhaseNum()%2!=0)
-                continue;
-            if (hero.getName()==HeroName.HEALER && world.getMovePhaseNum()%4!=0)
-                continue;
-            Direction[] goodPath=world.getPathMoveDirections(hero.getCurrentCell(),objZone[random.nextInt(objZone.length)]);
+            if(tactic!=Tactic.GETTING_TO_OBJ_ZONE) {
+                if (hero.getName() == HeroName.GUARDIAN && world.getMovePhaseNum() != 1)
+                    continue;
+                if (hero.getName() == HeroName.BLASTER && world.getMovePhaseNum() % 4 != 0)
+                    continue;
+                if (hero.getName() == HeroName.SENTRY && world.getMovePhaseNum() % 2 != 0)
+                    continue;
+                if (hero.getName() == HeroName.HEALER && world.getMovePhaseNum() % 4 != 0)
+                    continue;
+            }
+            Direction[] goodPath=world.getPathMoveDirections(hero.getCurrentCell(),heroesPositionalAims.get(hero.getId()));
             if (goodPath.length==0)
-                continue;
-            Direction goodDir=goodPath[0];
-            world.moveHero(hero, goodDir);
+            {
+                if (tactic==Tactic.GETTING_TO_OBJ_ZONE)
+                    inObjZoneHeroesCnt++;
+                //farar az daste doshmanane nazdik
+            }
+            else{
+                Direction goodDir=goodPath[0];
+                world.moveHero(hero, goodDir);
+            }
         }
+        if (tactic==Tactic.GETTING_TO_OBJ_ZONE && inObjZoneHeroesCnt==heroes.length)
+            tactic=Tactic.ATTACK_THEM_ALL;
     }
 
     @Override
@@ -59,44 +77,44 @@ public class SimpleAI implements AbstractAI {
         for (Hero hero:myHeroes){
             if (hero.getName()==HeroName.HEALER){
                 Hero mostInjured=mostInjuredAndNear(world,hero,4,toBeHealed);
-                if (mostInjured!=null){
+                if (mostInjured!=null && hero.getAbility(AbilityName.HEALER_HEAL).isReady()){
                     world.castAbility(hero,AbilityName.HEALER_HEAL,mostInjured.getCurrentCell());
                 }else {
                     Hero weakestEnemy = mostInjuredAndNear(world, hero,4, enemies);
-                    if (weakestEnemy!=null)
+                    if (weakestEnemy!=null && hero.getAbility(AbilityName.HEALER_ATTACK).isReady())
                         world.castAbility(hero,AbilityName.HEALER_ATTACK,weakestEnemy.getCurrentCell());
                     //else maybe dodge
                 }
             }
             else if(hero.getName()==HeroName.BLASTER){
                 Hero weakestEnemy=mostInjuredAndNear(world,hero,5,enemies);
-                if (weakestEnemy!=null)
+                if (weakestEnemy!=null && hero.getAbility(AbilityName.BLASTER_BOMB).isReady())
                     world.castAbility(hero,AbilityName.BLASTER_BOMB,weakestEnemy.getCurrentCell());
                 else{
                     weakestEnemy=mostInjuredAndVisiblyNear(world,hero,4,enemies);
-                    if (weakestEnemy!=null)
+                    if (weakestEnemy!=null && hero.getAbility(AbilityName.BLASTER_ATTACK).isReady())
                         world.castAbility(hero,AbilityName.BLASTER_ATTACK,hero.getCurrentCell());
                     //else maybe dodge
                 }
             }
             else if(hero.getName()==HeroName.SENTRY){
                 Hero weakestEnemy=mostInjuredAndVisiblyNear(world,hero,Integer.MAX_VALUE,enemies);
-                if (weakestEnemy!=null)
+                if (weakestEnemy!=null && hero.getAbility(AbilityName.SENTRY_RAY).isReady())
                     world.castAbility(hero,AbilityName.SENTRY_RAY,weakestEnemy.getCurrentCell());
                 else{
                     weakestEnemy=mostInjuredAndVisiblyNear(world,hero,7,enemies);
-                    if (weakestEnemy!=null)
+                    if (weakestEnemy!=null && hero.getAbility(AbilityName.SENTRY_ATTACK).isReady())
                         world.castAbility(hero,AbilityName.SENTRY_ATTACK,hero.getCurrentCell());
                     //else maybe dodge
                 }
             }
             else if(hero.getName()==HeroName.GUARDIAN){
                 Hero mostInjured=mostInjuredAndNear(world,hero,4,toBeHealed);
-                if (mostInjured!=null){
+                if (mostInjured!=null && hero.getAbility(AbilityName.GUARDIAN_FORTIFY).isReady()){
                     world.castAbility(hero,AbilityName.GUARDIAN_FORTIFY,mostInjured.getCurrentCell());
                 }else {
                     Hero weakestEnemy = mostInjuredAndNear(world, hero,1, enemies);
-                    if (weakestEnemy!=null)
+                    if (weakestEnemy!=null && hero.getAbility(AbilityName.GUARDIAN_ATTACK).isReady())
                         world.castAbility(hero,AbilityName.GUARDIAN_ATTACK,weakestEnemy.getCurrentCell());
                     //else maybe dodge
                 }

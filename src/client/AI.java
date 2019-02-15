@@ -10,7 +10,7 @@ import java.util.Random;
 public class AI
 {
 
-    private Random random = new Random();
+
 
     public void preProcess(World world)
     {
