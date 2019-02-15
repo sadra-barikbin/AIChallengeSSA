@@ -7,14 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="gson-2.3.1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/gson-2.3.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="gson-2.3.1" level="project" />
   </component>
 </module>
