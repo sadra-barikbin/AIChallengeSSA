@@ -1,7 +1,9 @@
 package ai;
 
+import ai.tactics.GetToObjZoneTactic;
+import ai.tactics.HoldOnTactic;
+import ai.tactics.Tactic;
 import client.model.*;
-import client.model.Map;
 
 import java.util.*;
 
@@ -10,12 +12,10 @@ made by Sadra
  **/
 public class SimpleAI implements AbstractAI {
     private Random random = new Random();
-    private java.util.Map<Integer,Cell> heroesPositionalAims;
-    private Tactic tactic;
+    private java.util.Map<Integer,Tactic> heroesTactics;
     @Override
     public void preProcess(World world) {
         System.out.println("preProcess in simpleAI started");
-        tactic=Tactic.GETTING_TO_OBJ_ZONE;
     }
 
     @Override
@@ -30,15 +30,15 @@ public class SimpleAI implements AbstractAI {
         Hero[] heroes = world.getMyHeroes();
         Cell[] objZone=world.getMap().getObjectiveZone();
         if (world.getCurrentTurn()==4 && world.getMovePhaseNum()==0){
-            heroesPositionalAims=new HashMap<>();
+            heroesTactics=new HashMap<>();
             for (Hero h:heroes){
-                heroesPositionalAims.put(h.getId(),objZone[random.nextInt(objZone.length)]);
+                heroesTactics.put(h.getId(),new GetToObjZoneTactic(objZone[random.nextInt(objZone.length)]));
             }
         }
-        int inObjZoneHeroesCnt=0;
         for (Hero hero : heroes)
         {
-            if(tactic!=Tactic.GETTING_TO_OBJ_ZONE) {
+            Tactic tactic=heroesTactics.get(hero.getId());
+            if(!(tactic instanceof GetToObjZoneTactic)) {
                 if (hero.getName() == HeroName.GUARDIAN && world.getMovePhaseNum() != 1)
                     continue;
                 if (hero.getName() == HeroName.BLASTER && world.getMovePhaseNum() % 4 != 0)
@@ -48,20 +48,20 @@ public class SimpleAI implements AbstractAI {
                 if (hero.getName() == HeroName.HEALER && world.getMovePhaseNum() % 4 != 0)
                     continue;
             }
-            Direction[] goodPath=world.getPathMoveDirections(hero.getCurrentCell(),heroesPositionalAims.get(hero.getId()));
+            Direction[] goodPath=world.getPathMoveDirections(hero.getCurrentCell(),tactic.getAimCell());
             if (goodPath.length==0)
             {
-                if (tactic==Tactic.GETTING_TO_OBJ_ZONE)
-                    inObjZoneHeroesCnt++;
+                if (tactic instanceof GetToObjZoneTactic)
+                    heroesTactics.replace(hero.getId(),new HoldOnTactic(hero.getCurrentCell()));
                 //farar az daste doshmanane nazdik
+                //ya hamle be anha
+                //ya raftan be tarafe doostan
             }
             else{
                 Direction goodDir=goodPath[0];
                 world.moveHero(hero, goodDir);
             }
         }
-        if (tactic==Tactic.GETTING_TO_OBJ_ZONE && inObjZoneHeroesCnt==heroes.length)
-            tactic=Tactic.ATTACK_THEM_ALL;
     }
 
     @Override
