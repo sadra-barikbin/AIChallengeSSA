@@ -15,7 +15,7 @@ public class Hero
     private int remRespawnTime;
     private Cell currentCell;
     private Cell[] recentPath;
-
+    public Hero(){}
     Hero(HeroConstants heroConstants, int id, ArrayList<Ability> abilities)
     {
         this.id = id;

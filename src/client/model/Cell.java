@@ -1,6 +1,6 @@
 package client.model;
 
-public class Cell {
+public class Cell implements Comparable<Cell>{
     private boolean isWall;
     private boolean isInMyRespawnZone;
     private boolean isInOppRespawnZone;
@@ -9,7 +9,7 @@ public class Cell {
     private int row;
     private int column;
     
-    Cell(int row, int column) {
+    public Cell(int row, int column) {
         this.row = row;
         this.column = column;
         this.isWall = false;
@@ -98,5 +98,10 @@ public class Cell {
                 ", isInObjectiveZone=" + isInObjectiveZone +
                 ", isInVision=" + isInVision +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Cell o) {
+        return Integer.compare(this.row,o.row)==0?Integer.compare(this.column,o.column):Integer.compare(this.row,o.row);
     }
 }

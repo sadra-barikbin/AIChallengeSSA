@@ -9,6 +9,7 @@ public class Ability {
         this.abilityConstants = abilityConstants;
         this.remCooldown = 0;
     }
+    public Ability(){}
 
     public boolean isReady()
     {

@@ -1,6 +1,8 @@
 package ai.tactics;
 
 import client.model.Cell;
+import client.model.Hero;
+import client.model.World;
 
 public abstract class Tactic {
     protected String name;
@@ -17,4 +19,6 @@ public abstract class Tactic {
     public Cell getAimCell(){
         return aimCell;
     }
+    public abstract void applyMove(Hero hero, World world);
+    public abstract void applyAction(Hero hero,World world);
 }
