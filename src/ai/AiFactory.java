@@ -13,6 +13,7 @@ public class AiFactory {
                 }
                 case "simple":{
                     ourInstance=new SimpleAI();
+                    break;
                 }
                 default:{
                     ourInstance=new RandomAI();

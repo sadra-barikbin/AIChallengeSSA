@@ -24,7 +24,7 @@ public class SimpleAI implements AbstractAI {
     @Override
     public void pickTurn(World world) {
         System.out.println("pick started");
-        world.pickHero(HeroName.values()[world.getCurrentTurn()]);
+        world.pickHero(HeroName.BLASTER);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SimpleAI implements AbstractAI {
             }
         }
         if (tactic instanceof GetToObjZoneTactic && inObjZoneHeroesCnt==heroes.length)
-            tactic=new OffendTactic(null,null);
+            tactic=new OffendTactic(null,null,null);
     }
 
     @Override

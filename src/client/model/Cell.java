@@ -99,7 +99,6 @@ public class Cell implements Comparable<Cell>{
                 ", isInVision=" + isInVision +
                 '}';
     }
-
     @Override
     public int compareTo(Cell o) {
         return Integer.compare(this.row,o.row)==0?Integer.compare(this.column,o.column):Integer.compare(this.row,o.row);

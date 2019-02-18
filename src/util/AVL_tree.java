@@ -107,6 +107,9 @@ public class AVL_tree<T extends Comparable<T>> {
             tempMax=tempMax.r_node;
         return tempMax.data;
     }
+    public boolean exist(T key){
+        return this.search(key)!=null;
+    }
     public T search(T key){
         AVL_node b=_search(key,root);
         if (b!=null)

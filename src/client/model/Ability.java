@@ -4,12 +4,11 @@ public class Ability {
 
     private AbilityConstants abilityConstants;
     private int remCooldown;
-
+    public Ability(){}
     Ability(AbilityConstants abilityConstants) {
         this.abilityConstants = abilityConstants;
         this.remCooldown = 0;
     }
-    public Ability(){}
 
     public boolean isReady()
     {
