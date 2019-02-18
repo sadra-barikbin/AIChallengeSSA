@@ -12,6 +12,8 @@ public class DefenceTactic extends Tactic {
 
     @Override
     public void applyMove(Hero hero, World world) {
+        if(world.manhattanDistance(hero.getCurrentCell(),aimCell)<=toApply.getRange())
+            return;
         Direction[] path=world.getPathMoveDirections(hero.getCurrentCell(),aimCell);
         if (path.length!=0)
             world.moveHero(hero,path[0]);
