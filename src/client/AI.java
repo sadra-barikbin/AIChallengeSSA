@@ -14,7 +14,7 @@ public class AI
 
     public void preProcess(World world)
     {
-        AiFactory.getInstance("simple").preProcess(world);
+        AiFactory.getInstance("complex").preProcess(world);
     }
 
     public void pickTurn(World world)

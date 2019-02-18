@@ -7,9 +7,12 @@ public class AiFactory {
         modeSelected=true;
         if(ourInstance==null){
             switch (AiMode){
+                case "complex":{
+                    ourInstance=new ComplexAI();
+                    break;
+                }
                 case "simple":{
                     ourInstance=new SimpleAI();
-                    break;
                 }
                 default:{
                     ourInstance=new RandomAI();

@@ -21,6 +21,7 @@ public class DodgeTactic extends Tactic {
                 int newY=currentCell.getRow()+dy;
                 if (world.getMap().isInMap(newY,newX) && !world.getMap().getCell(newY,newX).isWall())
                 {
+                    System.out.println("dodge done!");
                     world.castAbility(hero,hero.getDodgeAbilities()[0],newY,newX);
                     return;
                 }

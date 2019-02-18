@@ -7,6 +7,8 @@ import client.model.Cell;
 import org.junit.jupiter.api.Test;
 import util.AVL_tree;
 
+import java.util.Random;
+
 class test {
     @Test
     void t1(){
@@ -27,5 +29,13 @@ class test {
         Opportunity op=new Opportunity(new Cell(3,3),new MockedAbility(AbilityName.BLASTER_BOMB,4),new MockedHero(new Cell(1,1)),new MockedHero(new Cell(5,6)),0,true);
         Opportunity op2=new Opportunity(new Cell(3,3),new MockedAbility(AbilityName.HEALER_HEAL,4),new MockedHero(new Cell(1,1)),new MockedHero(new Cell(5,6)),0);
         System.out.println(op.compareTo(op2));
+    }
+    @Test
+    void t4(){
+        Random random=new Random();
+        int phase=5;
+        int cHP=10;
+        int mHP=100;
+        System.out.println(random.nextInt(10)<((5-phase)+(cHP/mHP*5/*10 / 2*/)));
     }
 }
