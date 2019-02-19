@@ -64,7 +64,7 @@ public class SimpleAI implements AbstractAI {
             }
         }
         if (tactic instanceof GetToObjZoneTactic && inObjZoneHeroesCnt==heroes.length)
-            tactic=new OffendTactic(null,null,null);
+            tactic=new OffendTactic(null,null);
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.lang.Math;
 
 public class AVL_tree<T extends Comparable<T>> {
     private AVL_node root;
+    private int count=0;
     private class AVL_node {
         AVL_node r_node;
         AVL_node l_node;
@@ -53,12 +54,12 @@ public class AVL_tree<T extends Comparable<T>> {
                 Height=Math.max(r_node.Height,l_node.Height)+1;
         }
     }
-    public void update_node(T b){
+    public void update(T b){
         AVL_node bb= _search(b,root);
         bb.data=b;
     }
-    public void delete_node(T I){
-        delete(_search(I,root));
+    public void delete(T I){
+        _delete(_search(I,root));
     }
     public AVL_tree(T[] x){
         for (T t:x){
@@ -75,6 +76,9 @@ public class AVL_tree<T extends Comparable<T>> {
         L.add(root.data);
         L.addAll(in_ord_trav(root.r_node));
         return L;
+    }
+    public int getCount(){
+        return count;
     }
     private ArrayList<T> in_ord_trav(AVL_node x){
         if (x==null){
@@ -137,8 +141,9 @@ public class AVL_tree<T extends Comparable<T>> {
         }
         else
             push_start_from(root,new_b);
+        count++;
     }
-    void delete(AVL_node x){
+    void _delete(AVL_node x){
         if (x==null)
             return;
         AVL_node t=x.l_node;
@@ -182,12 +187,14 @@ public class AVL_tree<T extends Comparable<T>> {
             }
             if (f!=x)
                 check_being_AVL(f);
+            count--;
         }
         else{
             t=x.r_node;
             if (t==null){
                 if (x==root){
                     root=null;
+                    count--;
                     return;
                 }
                 else {
@@ -206,6 +213,7 @@ public class AVL_tree<T extends Comparable<T>> {
                     //x.father.update_height();
                     check_being_AVL(x.father);
                     x.father=null;
+                    count--;
                     //System.gc();
                     return;
                 }
@@ -246,6 +254,7 @@ public class AVL_tree<T extends Comparable<T>> {
             //f.update_height();
             if (f!=x)
                 check_being_AVL(f);
+            count--;
         }
     }
     private void push_start_from(AVL_node x,AVL_node neww){

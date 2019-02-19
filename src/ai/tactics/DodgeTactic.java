@@ -27,7 +27,7 @@ public class DodgeTactic extends Tactic {
                 if (world.getMap().isInMap(newY,newX) && !world.getMap().getCell(newY,newX).isWall())
                 {
                     Cell temp=world.getMap().getCell(newY,newX);
-                    if (objZone.exist(temp)) {
+                    if (temp.isInObjectiveZone()) {
                         if (bestBestOption==null ||(world.manhattanDistance(hero.getCurrentCell(),bestBestOption)<world.manhattanDistance(hero.getCurrentCell(),temp)))
                             bestBestOption=temp;
                     }
@@ -42,10 +42,9 @@ public class DodgeTactic extends Tactic {
             world.castAbility(hero, hero.getDodgeAbilities()[0], bestOption);
 
     }
-    private AVL_tree<Cell> objZone;
-    public DodgeTactic(Cell currentCell, AVL_tree<Cell> objZone){
+
+    public DodgeTactic(Cell currentCell){
         name="DODGE";
-        this.objZone=objZone;
         this.currentCell=currentCell;
     }
 }

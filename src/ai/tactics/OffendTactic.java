@@ -5,12 +5,12 @@ import util.AVL_tree;
 
 public class OffendTactic extends Tactic {
     private Ability toApply;
-    private AVL_tree<Cell> objZone;
-    public OffendTactic(Ability ability,Cell aimCell, AVL_tree<Cell> objZone){
+
+    public OffendTactic(Ability ability,Cell aimCell){
         name="OFFEND";
         this.aimCell=aimCell;
         this.toApply=ability;
-        this.objZone=objZone;
+
     }
 
     @Override
@@ -42,7 +42,7 @@ public class OffendTactic extends Tactic {
                     break;
                 }
             }
-            if (objZone.exist(target))
+            if (target.isInObjectiveZone())
                 world.moveHero(hero, path[0]);
         }
     }

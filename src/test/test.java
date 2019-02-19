@@ -7,6 +7,7 @@ import client.model.Cell;
 import org.junit.jupiter.api.Test;
 import util.AVL_tree;
 
+import java.util.Arrays;
 import java.util.Random;
 
 class test {
@@ -32,10 +33,16 @@ class test {
     }
     @Test
     void t4(){
-        Random random=new Random();
-        int phase=5;
-        int cHP=10;
-        int mHP=100;
-        System.out.println(random.nextInt(10)<((5-phase)+(cHP/mHP*5/*10 / 2*/)));
+        Cell[] a=new Cell[4];
+        a[0]=new Cell(2,1);
+        a[1]=new Cell(3,2);
+        a[2]=new Cell(2,4);
+        a[3]=new Cell(2,1);
+        Arrays.sort(a);
+        for (Cell c:a) {
+            System.out.printf("%d %d\n",c.getRow(),c.getColumn());
+        }
+
     }
+
 }
