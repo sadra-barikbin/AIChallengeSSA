@@ -7,6 +7,9 @@ import util.Tuple;
 
 import java.util.*;
 
+import static ai.common.Functions.manhatanicNearestCellEmptyOfFriend;
+import static ai.common.Functions.getDangersAndOpportunitiesForHero;
+
 /**
 made by Sadra
  **/
@@ -59,18 +62,23 @@ public class ComplexAI implements AbstractAI {
     @Override
     public void moveTurn(World world) {
         System.out.println("move started");
-        Hero[] heroes = world.getMyHeroes();
+        Hero[] Allheroes = world.getMyHeroes();
+        List<Hero> liveHeroes=new ArrayList<>();
+        for (Hero hero:Allheroes)
+            if (hero.getCurrentHP()!=0)
+                liveHeroes.add(hero);
+        Hero[] heroes=liveHeroes.toArray(new Hero[]{});
         Cell[] objZone=world.getMap().getObjectiveZone();
         if (world.getCurrentTurn()==4 && world.getMovePhaseNum()==0){
             heroesTactics=new HashMap<>();
             for (Hero h:heroes){
-                heroesTactics.put(h.getId(),new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,objZone,h.getCurrentCell())));
+                heroesTactics.put(h.getId(),new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,h,objZone,h.getCurrentCell())));
             }
         }
         for (Hero hero : heroes)
         {
             if (world.getMovePhaseNum()<3 && !hero.getCurrentCell().isInObjectiveZone() && !(heroesTactics.get(hero.getId()) instanceof GetToObjZoneTactic)) {
-                heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,objZone,hero.getCurrentCell())));
+                heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell())));
             }
             else {
                 Hero[] enemies=world.getOppHeroes();
@@ -90,7 +98,7 @@ public class ComplexAI implements AbstractAI {
                             Hero helper = null;
                             for (Hero friend : heroes) {
                                 int distanceToFriend = world.manhattanDistance(friend.getCurrentCell(), hero.getCurrentCell());
-                                if (friend.getName() == HeroName.HEALER && friend.getAbility(AbilityName.HEALER_HEAL).isReady() && friend.getCurrentHP() > friend.getMaxHP() / 4 && distanceToFriend > friend.getAbility(AbilityName.HEALER_HEAL).getRange() && (distanceToFriend - (5 - world.getMovePhaseNum())) <= friend.getAbility(AbilityName.HEALER_HEAL).getRange()) {
+                                if (friend.getName() == HeroName.HEALER && friend.getAbility(AbilityName.HEALER_HEAL).isReady() && friend.getCurrentHP() > friend.getMaxHP() / 4 && distanceToFriend > friend.getAbility(AbilityName.HEALER_HEAL).getRange() && (distanceToFriend - (5 - world.getMovePhaseNum()+1)) <= friend.getAbility(AbilityName.HEALER_HEAL).getRange()) {
                                     helper = friend;
                                     break;
                                 }
@@ -102,8 +110,9 @@ public class ComplexAI implements AbstractAI {
                             else
                                 payAttentionTo="opportunity";
                         }
-                        else if(hero.getDodgeAbilities()[0].isReady() && dangersAndOpportunes.getFirst().getCount()>=4 && world.getMovePhaseNum()==5)
-                            heroesTactics.replace(hero.getId(), new DodgeTactic(hero.getCurrentCell()));
+                        else if(hero.getDodgeAbilities()[0].isReady() && dangersAndOpportunes.getFirst().getCount()>=4 && world.getMovePhaseNum()==5) {
+                            payAttentionTo="dodge";
+                        }
                         else
                             payAttentionTo = "opportunity";
                     } else {
@@ -115,7 +124,7 @@ public class ComplexAI implements AbstractAI {
                 if (payAttentionTo == null) {
                     if (!hero.getCurrentCell().isInObjectiveZone()) {
                         if (!(heroesTactics.get(hero.getId()) instanceof GetToObjZoneTactic))
-                            heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,objZone,hero.getCurrentCell())));
+                            heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell())));
                     }
                     else
                         heroesTactics.replace(hero.getId(), new HoldOnTactic(hero.getCurrentCell()));
@@ -136,7 +145,7 @@ public class ComplexAI implements AbstractAI {
                                 int distanceToFriend = world.manhattanDistance(friend.getCurrentCell(), hero.getCurrentCell());
                                 if (friend.getName()==HeroName.HEALER && friend.getCurrentHP()>friend.getMaxHP()/4)
                                     helperAlive=true;
-                                if (friend.getName() == HeroName.HEALER && friend.getAbility(AbilityName.HEALER_HEAL).isReady() && friend.getCurrentHP() > friend.getMaxHP() / 4 && distanceToFriend > friend.getAbility(AbilityName.HEALER_HEAL).getRange() && (distanceToFriend - (5 - world.getMovePhaseNum())) <= friend.getAbility(AbilityName.HEALER_HEAL).getRange()) {
+                                if (friend.getName() == HeroName.HEALER && friend.getAbility(AbilityName.HEALER_HEAL).isReady() && friend.getCurrentHP() > friend.getMaxHP() / 4 && distanceToFriend > friend.getAbility(AbilityName.HEALER_HEAL).getRange() && (distanceToFriend - (5 - world.getMovePhaseNum()+1)) <= friend.getAbility(AbilityName.HEALER_HEAL).getRange()) {
                                     helper = friend;
                                     break;
                                 }
@@ -150,14 +159,16 @@ public class ComplexAI implements AbstractAI {
                                 heroesTactics.replace(hero.getId(), new EscapeTactic(new Cell(escapeAimY, escapeAimX)));
                             }
                             else {
-                                heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,objZone,hero.getCurrentCell())));
+                                heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell())));
                             }
                         }
                         else {
-                            heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,objZone,hero.getCurrentCell())));
+                            heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell())));
                         }
                     }
                 }
+                else if (payAttentionTo.equals("dodge"))
+                    heroesTactics.replace(hero.getId(), new DodgeTactic(hero.getCurrentCell()));
             }
             Tactic tactic=heroesTactics.get(hero.getId());
             tactic.applyMove(hero,world);
@@ -173,63 +184,5 @@ public class ComplexAI implements AbstractAI {
         }
     }
 
-    private Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>> getDangersAndOpportunitiesForHero(Hero hero,World world,Hero[] byTeamVisibleEnemies){
-        AVL_tree<Danger> dangers=new AVL_tree<>();
-        AVL_tree<Opportunity> opportunities=new AVL_tree<>();
-        for (Hero enemy:byTeamVisibleEnemies){
-            if(enemy.getCurrentHP()==0)
-                continue;
-            boolean heroSeeEnemy=world.isInVision(hero.getCurrentCell(),enemy.getCurrentCell());
-            int distanceBtwMeAndEnemy=world.manhattanDistance(hero.getCurrentCell(),enemy.getCurrentCell());
-            boolean canOffend=false;
-            boolean canDodge=true;
-            for (CastAbility dAbility:world.getOppCastAbilities()){
-                if (dAbility.getAbilityName()==enemy.getDodgeAbilities()[0].getName()) {
-                    canDodge = false;
-                    break;
-                }
-            }
-            AbilityName pastCastAbiName=null;
-            for(CastAbility pastAbility:world.getOppCastAbilities()){
-                if (pastAbility.getCasterId()==enemy.getId()) {
-                    pastCastAbiName=pastAbility.getAbilityName();
-                    break;
-                }
-            }
-            for (Ability ability:enemy.getOffensiveAbilities()){
-                if ((heroSeeEnemy||ability.isLobbing()) && (pastCastAbiName==null||(pastCastAbiName!=ability.getName()))&& ability.getRange()>=distanceBtwMeAndEnemy/*-(5-world.getMovePhaseNum())*/) {
-                    dangers.add(new Danger(enemy.getCurrentCell(), ability, hero, world.getMovePhaseNum()));
-                    canOffend = true;
-                }
-            }
-            boolean opportunityIsRisky=canDodge||canOffend;
-            for (Ability ability:hero.getOffensiveAbilities()){
-                if ( (heroSeeEnemy||ability.isLobbing())&& ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum())))
-                    opportunities.add(new Opportunity(enemy.getCurrentCell(),ability,hero,enemy,world.getMovePhaseNum(),opportunityIsRisky));
-            }
-        }
-        if (hero.getName()==HeroName.HEALER && hero.getDefensiveAbilities()[0].isReady()){
-            for (Hero friend:world.getMyHeroes()){
-                if (friend.getCurrentHP()==0)
-                    continue;
-                if (friend.getCurrentHP()<friend.getMaxHP()/5 && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell())-(5-world.getMovePhaseNum()))
-                    opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend,world.getMovePhaseNum()));
-            }
-        }
-        //defence guardian moonde
-        return new Tuple<>(dangers,opportunities);
-    }
-    public Cell manhatanicNearestCellEmptyOfFriend(World world,Cell[] in,Cell to){
-        Cell best=null;
-        int bestDist=Integer.MAX_VALUE;
-        int candidDist;
-        for (Cell candid:in){
-            candidDist=world.manhattanDistance(candid,to);
-            if ((best==null || candidDist<bestDist)&& world.getMyHero(candid)==null){
-                best=candid;
-                bestDist=candidDist;
-            }
-        }
-        return best;
-    }
+
 }
