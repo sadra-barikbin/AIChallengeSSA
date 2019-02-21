@@ -14,7 +14,7 @@ public class AI
 
     public void preProcess(World world)
     {
-        AiFactory.getInstance("complex").preProcess(world);
+        AiFactory.getInstance("structured-complex").preProcess(world);
     }
 
     public void pickTurn(World world)

@@ -1,5 +1,8 @@
 package ai;
 
+
+//import test.TestAI;
+
 public class AiFactory {
     private static AbstractAI ourInstance ;
     private static boolean modeSelected=false;
@@ -15,6 +18,14 @@ public class AiFactory {
                     ourInstance=new SimpleAI();
                     break;
                 }
+                case "structured-complex":{
+                    ourInstance=new StructuredComplexAI();
+                    break;
+                }
+                /*case "test":{
+                    ourInstance=new TestAI();
+                    break;
+                }*/
                 default:{
                     ourInstance=new RandomAI();
                     break;

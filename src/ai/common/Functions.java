@@ -7,10 +7,11 @@ import client.model.*;
 import util.AVL_tree;
 import util.Tuple;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Functions {
-    public static Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>> getDangersAndOpportunitiesForHero(Hero hero, World world, Hero[] byTeamVisibleEnemies){
+    public static Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>> getDangersAndOpportunitiesForHero(Hero hero, World world, Hero[] byTeamVisibleEnemies,java.util.Map<Integer, Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>>> heroesDansAndOppsForGuardianFortify){
         AVL_tree<Danger> dangers=new AVL_tree<>();
         AVL_tree<Opportunity> opportunities=new AVL_tree<>();
         for (Hero enemy:byTeamVisibleEnemies){
@@ -35,25 +36,55 @@ public class Functions {
             }
             for (Ability ability:enemy.getOffensiveAbilities()){
                 if ((heroSeeEnemy||ability.isLobbing()) && (pastCastAbiName==null||(pastCastAbiName!=ability.getName()))&& ability.getRange()>=distanceBtwMeAndEnemy/*-(5-world.getMovePhaseNum())*/) {
-                    dangers.add(new Danger(enemy.getCurrentCell(), ability, hero, world.getMovePhaseNum()));
+                    dangers.add(new Danger(enemy.getCurrentCell(), ability, hero));
                     canOffend = true;
                 }
             }
             boolean opportunityIsRisky=canDodge||canOffend;
             for (Ability ability:hero.getOffensiveAbilities()){
-                if ( (heroSeeEnemy||ability.isLobbing())&& ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum())))
-                    opportunities.add(new Opportunity(enemy.getCurrentCell(),ability,hero,enemy,world.getMovePhaseNum(),opportunityIsRisky));
+                if ( ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum()+1))) {
+                    if(heroSeeEnemy||ability.isLobbing())
+                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getMovePhaseNum(), opportunityIsRisky));
+                    else {
+                        /*Cell firstCellInPathWithEnemyVisible;
+                        Direction[] path=world.getPathMoveDirections(hero.getCurrentCell(),enemy.getCurrentCell(),getMyLiveHeroesPlacesButMe(world,hero));
+                        Cell temp=hero.getCurrentCell();
+                        int pathIndex=0;
+                        while (!world.isInVision(temp,enemy.getCurrentCell())) {
+                            temp = applyDirectionToCell(world, temp, path[pathIndex]);
+                            pathIndex++;
+                        }
+                        firstCellInPathWithEnemyVisible=temp;*/
+                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getMovePhaseNum(), opportunityIsRisky,true));
+                    }
+                }
             }
         }
         if (hero.getName()==HeroName.HEALER && hero.getDefensiveAbilities()[0].isReady()){
             for (Hero friend:world.getMyHeroes()){
                 if (friend.getCurrentHP()==0)
                     continue;
-                if (friend.getCurrentHP()<friend.getMaxHP()/5 && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell())-(5-world.getMovePhaseNum()))
+                if (friend.getCurrentHP()<friend.getMaxHP()/5 && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell())-(5-world.getMovePhaseNum()+1))
                     opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend,world.getMovePhaseNum()));
             }
         }
-        //defence guardian moonde
+        else if (heroesDansAndOppsForGuardianFortify!=null && hero.getName()==HeroName.GUARDIAN && hero.getDefensiveAbilities()[0].isReady()){
+            Hero mostDeserved=null;
+            int mostDeservedDangersCount=0;
+            for (Hero friend:world.getMyHeroes()){
+                if (friend.getCurrentHP()==0 || friend.getName()==HeroName.GUARDIAN)//this says Guardian does not guard any Guardian
+                    continue;
+                int dangersCount=heroesDansAndOppsForGuardianFortify.get(friend.getId()).getFirst().getCount();
+                if (dangersCount>4 && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell())-(5-world.getMovePhaseNum()+1)){
+                    if (mostDeserved==null || dangersCount>mostDeservedDangersCount || friend.getCurrentHP()<mostDeserved.getCurrentHP()) {
+                        mostDeserved = friend;
+                        mostDeservedDangersCount=dangersCount;
+                    }
+                }
+            }
+            if (mostDeserved!=null)
+                opportunities.add(new Opportunity(mostDeserved.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,mostDeserved,world.getMovePhaseNum()));
+        }
         return new Tuple<>(dangers,opportunities);
     }
     public static Cell manhatanicNearestCellEmptyOfFriend(World world,Hero me,Cell[] in,Cell to){
@@ -69,7 +100,7 @@ public class Functions {
         }
         return best;
     }
-    /*public static Tactic resolveTactic(World world, Hero hero,java.util.Map<Integer,Tactic> lastHeroesTactics, java.util.Map<Integer,Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>>> heroesDansAndOpps,List<Hero> liveHeroes, List<Hero> byTeamVisibleEnemies,Cell[] objZone){
+    public static Tactic resolveTactic(World world, Hero hero,java.util.Map<Integer,Tactic> lastHeroesTactics, java.util.Map<Integer,Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>>> heroesDansAndOpps,Hero[] liveHeroes,Cell[] objZone){
         if (world.getMovePhaseNum()<3 && !hero.getCurrentCell().isInObjectiveZone() && !(lastHeroesTactics.get(hero.getId()) instanceof GetToObjZoneTactic))
             return new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell()));
         boolean weak=hero.getCurrentHP() < hero.getMaxHP() / 5;
@@ -91,7 +122,7 @@ public class Functions {
         Danger worstDanger=heroesDansAndOpps.get(hero.getId()).getFirst().getMax();
         if (bestOpp==null && worstDanger==null)
             return new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell()));
-        if(bestOpp!=null && worstDanger==null){
+        if(bestOpp!=null){
             if (bestOpp.type.getType()==AbilityType.OFFENSIVE)
                 return new OffendTactic(bestOpp.type, bestOpp.in);
             else if (bestOpp.type.getType()==AbilityType.DEFENSIVE)
@@ -99,6 +130,100 @@ public class Functions {
             else
                 throw new RuntimeException("just offensive or defensive here");
         }
-        return null;
-    }*/
+//        if (bestOpp==null && worstDanger!=null){
+            return new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell()));
+//        }
+    }
+    public static List<Danger> getDangersInActionPhase(World world,Hero hero){
+        Hero[] enemies=world.getOppHeroes();
+        List<Hero> byTeamVisibleEnemies=new ArrayList<>();
+        for(Hero enemy:enemies){
+            if (enemy.getCurrentCell().getRow()!=-1)
+                byTeamVisibleEnemies.add(enemy);
+        }
+        List<Danger> toReturn=new ArrayList<>();
+        for (Hero enemy:byTeamVisibleEnemies) {
+            if (enemy.getCurrentHP() == 0)
+                continue;
+            boolean heroSeeEnemy = world.isInVision(hero.getCurrentCell(), enemy.getCurrentCell());
+            int distanceBtwMeAndEnemy = world.manhattanDistance(hero.getCurrentCell(), enemy.getCurrentCell());
+            AbilityName pastCastAbiName = null;
+            for (CastAbility pastAbility : world.getOppCastAbilities()) {
+                if (pastAbility.getCasterId() == enemy.getId()) {
+                    pastCastAbiName = pastAbility.getAbilityName();
+                    break;
+                }
+            }
+            for (Ability ability : enemy.getOffensiveAbilities()) {
+                if ((heroSeeEnemy || ability.isLobbing()) && (pastCastAbiName == null || (pastCastAbiName != ability.getName())) && ability.getRange() >= distanceBtwMeAndEnemy/*-(5-world.getMovePhaseNum())*/) {
+                    toReturn.add(new Danger(enemy.getCurrentCell(), ability, hero));
+                }
+            }
+        }
+        return toReturn;
+    }
+    public static Cell getGoodDodgeTarget(Hero hero,World world){
+        int maxJump=hero.getDodgeAbilities()[0].getRange();
+        Cell bestOption=null;
+        Cell bestBestOption=null;
+        Cell currentCell=hero.getCurrentCell();
+        for (int dx=-maxJump;dx<=maxJump;dx++){
+            for (int dy=-maxJump;dy<=maxJump;dy++){
+                if (Math.abs(dx)+Math.abs(dy)>maxJump ||(dx==0 && dy==0))
+                    continue;
+                int newX=currentCell.getColumn()+dx;
+                int newY=currentCell.getRow()+dy;
+                if (world.getMap().isInMap(newY,newX) && !world.getMap().getCell(newY,newX).isWall() && world.getMyHero(newY,newX)==null)
+                {
+                    Cell temp=world.getMap().getCell(newY,newX);
+                    if (temp.isInObjectiveZone()) {
+                        if (bestBestOption==null ||(world.manhattanDistance(hero.getCurrentCell(),bestBestOption)<world.manhattanDistance(hero.getCurrentCell(),temp)))
+                            bestBestOption=temp;
+                    }
+                    else if (bestOption==null ||(world.manhattanDistance(hero.getCurrentCell(),bestOption)<world.manhattanDistance(hero.getCurrentCell(),temp)) )
+                        bestOption=temp;
+                }
+            }
+        }
+        if (bestBestOption!=null)
+            return bestBestOption;
+        else if (bestOption!=null)
+            return bestOption;
+        else return null;
+    }
+    public static Cell applyDirectionToCell(World world,Cell c,Direction d){
+        switch (d){
+            case UP:{
+                return world.getMap().getCell(c.getRow()-1,c.getColumn());
+            }
+            case DOWN:{
+                return world.getMap().getCell(c.getRow()+1,c.getColumn());
+            }
+            case LEFT:{
+                return world.getMap().getCell(c.getRow(),c.getColumn()-1);
+            }
+            case RIGHT:{
+                return world.getMap().getCell(c.getRow(),c.getColumn()+1);
+            }
+            default:{
+                return c;
+            }
+        }
+    }
+    public static Hero[] getMyLiveHeroes(World world){
+        Hero[] allHeroes = world.getMyHeroes();
+        List<Hero> liveHeroes=new ArrayList<>();
+        for (Hero hero:allHeroes)
+            if (hero.getCurrentHP()!=0)
+                liveHeroes.add(hero);
+        return liveHeroes.toArray(new Hero[]{});
+    }
+    public static Cell[] getMyLiveHeroesPlacesButMe(World world,Hero me){
+        Hero[] allHeroes = world.getMyHeroes();
+        List<Cell> liveHeroes=new ArrayList<>();
+        for (Hero hero:allHeroes)
+            if (hero.getCurrentHP()!=0 && hero.getId()!=me.getId())
+                liveHeroes.add(hero.getCurrentCell());
+        return liveHeroes.toArray(new Cell[]{});
+    }
 }

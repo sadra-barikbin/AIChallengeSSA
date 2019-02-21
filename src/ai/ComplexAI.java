@@ -7,6 +7,7 @@ import util.Tuple;
 
 import java.util.*;
 
+import static ai.common.Functions.getMyLiveHeroes;
 import static ai.common.Functions.manhatanicNearestCellEmptyOfFriend;
 import static ai.common.Functions.getDangersAndOpportunitiesForHero;
 
@@ -62,20 +63,15 @@ public class ComplexAI implements AbstractAI {
     @Override
     public void moveTurn(World world) {
         System.out.println("move started");
-        Hero[] Allheroes = world.getMyHeroes();
-        List<Hero> liveHeroes=new ArrayList<>();
-        for (Hero hero:Allheroes)
-            if (hero.getCurrentHP()!=0)
-                liveHeroes.add(hero);
-        Hero[] heroes=liveHeroes.toArray(new Hero[]{});
+        Hero[] liveHeroes=getMyLiveHeroes(world);
         Cell[] objZone=world.getMap().getObjectiveZone();
         if (world.getCurrentTurn()==4 && world.getMovePhaseNum()==0){
             heroesTactics=new HashMap<>();
-            for (Hero h:heroes){
+            for (Hero h:liveHeroes){
                 heroesTactics.put(h.getId(),new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,h,objZone,h.getCurrentCell())));
             }
         }
-        for (Hero hero : heroes)
+        for (Hero hero : liveHeroes)
         {
             if (world.getMovePhaseNum()<3 && !hero.getCurrentCell().isInObjectiveZone() && !(heroesTactics.get(hero.getId()) instanceof GetToObjZoneTactic)) {
                 heroesTactics.replace(hero.getId(), new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell())));
@@ -87,7 +83,7 @@ public class ComplexAI implements AbstractAI {
                     if (enemy.getCurrentCell().getRow()!=-1)
                         byTeamVisibleEnemies.add(enemy);
                 }
-                Tuple<AVL_tree<Danger>, AVL_tree<Opportunity>> dangersAndOpportunes = getDangersAndOpportunitiesForHero(hero, world, byTeamVisibleEnemies.toArray(new Hero[]{}));
+                Tuple<AVL_tree<Danger>, AVL_tree<Opportunity>> dangersAndOpportunes = getDangersAndOpportunitiesForHero(hero, world, byTeamVisibleEnemies.toArray(new Hero[]{}),null);
                 Opportunity bestOpp = dangersAndOpportunes.getSecond().getMax();
                 Danger mostSeriousDanger = dangersAndOpportunes.getFirst().getMax();
                 String payAttentionTo = null;
@@ -96,7 +92,7 @@ public class ComplexAI implements AbstractAI {
                         boolean weak=hero.getCurrentHP() < hero.getMaxHP() / 4;
                         if (weak) {
                             Hero helper = null;
-                            for (Hero friend : heroes) {
+                            for (Hero friend : liveHeroes) {
                                 int distanceToFriend = world.manhattanDistance(friend.getCurrentCell(), hero.getCurrentCell());
                                 if (friend.getName() == HeroName.HEALER && friend.getAbility(AbilityName.HEALER_HEAL).isReady() && friend.getCurrentHP() > friend.getMaxHP() / 4 && distanceToFriend > friend.getAbility(AbilityName.HEALER_HEAL).getRange() && (distanceToFriend - (5 - world.getMovePhaseNum()+1)) <= friend.getAbility(AbilityName.HEALER_HEAL).getRange()) {
                                     helper = friend;
@@ -135,13 +131,13 @@ public class ComplexAI implements AbstractAI {
                         heroesTactics.replace(hero.getId(), new OffendTactic(bestOpp.type, bestOpp.in));
                 } else if (payAttentionTo.equals("danger")){
                     if (hero.getDodgeAbilities()[0].isReady() && world.getMovePhaseNum() == 5 && (hero.getCurrentHP() < hero.getMaxHP() / 4 || dangersAndOpportunes.getFirst().getCount()>=4))
-                        heroesTactics.replace(hero.getId(), new DodgeTactic(hero.getCurrentCell()));
+                        heroesTactics.replace(hero.getId(), new DodgeTactic());
                     else {
                         boolean weak=hero.getCurrentHP() < hero.getMaxHP() / 5;
                         if (weak) {
                             Hero helper = null;
                             boolean helperAlive=false;
-                            for (Hero friend : heroes) {
+                            for (Hero friend : liveHeroes) {
                                 int distanceToFriend = world.manhattanDistance(friend.getCurrentCell(), hero.getCurrentCell());
                                 if (friend.getName()==HeroName.HEALER && friend.getCurrentHP()>friend.getMaxHP()/4)
                                     helperAlive=true;
@@ -168,7 +164,7 @@ public class ComplexAI implements AbstractAI {
                     }
                 }
                 else if (payAttentionTo.equals("dodge"))
-                    heroesTactics.replace(hero.getId(), new DodgeTactic(hero.getCurrentCell()));
+                    heroesTactics.replace(hero.getId(), new DodgeTactic());
             }
             Tactic tactic=heroesTactics.get(hero.getId());
             tactic.applyMove(hero,world);
