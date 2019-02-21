@@ -19,6 +19,14 @@ public class Opportunity implements Comparable<Opportunity>{
         this.aimHero=aimHero;
         this.mayNotBeAbleToAttack=false;
     }
+    public Opportunity(Cell in,Ability type,Hero forr,Hero aimHero,boolean isRisky){
+        this.in=in;
+        this.type=type;
+        this.isRisky=isRisky;
+        this.forr=forr;
+        this.aimHero=aimHero;
+        this.mayNotBeAbleToAttack=false;
+    }
     public Opportunity(Cell in, Ability type, Hero forr, Hero aimHero, int phaseNum, boolean isRisky,boolean mayNotBeAbleToAttack){
         this.in=in;
         this.type=type;
@@ -34,6 +42,14 @@ public class Opportunity implements Comparable<Opportunity>{
         this.isRisky=false;
         this.forr=forr;
         this.at=phaseNum;
+        this.aimHero=aimHero;
+        this.mayNotBeAbleToAttack=false;
+    }
+    public Opportunity(Cell in, Ability type, Hero forr ,Hero aimHero){
+        this.in=in;
+        this.type=type;
+        this.isRisky=false;
+        this.forr=forr;
         this.aimHero=aimHero;
         this.mayNotBeAbleToAttack=false;
     }

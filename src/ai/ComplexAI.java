@@ -7,9 +7,7 @@ import util.Tuple;
 
 import java.util.*;
 
-import static ai.common.Functions.getMyLiveHeroes;
-import static ai.common.Functions.manhatanicNearestCellEmptyOfFriend;
-import static ai.common.Functions.getDangersAndOpportunitiesForHero;
+import static ai.common.Functions.*;
 
 /**
 made by Sadra
@@ -36,13 +34,13 @@ public class ComplexAI implements AbstractAI {
             numOfMyBlasters++;
         }
         else if(world.getCurrentTurn()==2){
-            if (world.getOppHeroes()[0].getName()==HeroName.BLASTER&&world.getOppHeroes()[1].getName()==HeroName.BLASTER) {
+            //if (world.getOppHeroes()[0].getName()==HeroName.BLASTER&&world.getOppHeroes()[1].getName()==HeroName.BLASTER) {
                 world.pickHero(HeroName.BLASTER);
                 numOfMyBlasters++;
-            }
-            else {
-                world.pickHero(HeroName.SENTRY);
-            }
+            //}
+//            else {
+//                world.pickHero(HeroName.SENTRY);
+//            }
         }
         else if (world.getCurrentTurn()==3){
             int numOfBlasters=0;
@@ -50,13 +48,13 @@ public class ComplexAI implements AbstractAI {
                 if (enemy.getName()==HeroName.BLASTER)
                     numOfBlasters++;
             }
-            if (numOfBlasters>=2 && numOfMyBlasters==1) {
+            //if (numOfBlasters>=2 && numOfMyBlasters==1) {
                 world.pickHero(HeroName.BLASTER);
                 numOfMyBlasters++;
-            }
-            else {
-                world.pickHero(HeroName.GUARDIAN);
-            }
+//            }
+//            else {
+//                world.pickHero(HeroName.GUARDIAN);
+//            }
         }
     }
 
@@ -130,8 +128,11 @@ public class ComplexAI implements AbstractAI {
                     else if (bestOpp.type.getType() == AbilityType.OFFENSIVE)
                         heroesTactics.replace(hero.getId(), new OffendTactic(bestOpp.type, bestOpp.in));
                 } else if (payAttentionTo.equals("danger")){
-                    if (hero.getDodgeAbilities()[0].isReady() && world.getMovePhaseNum() == 5 && (hero.getCurrentHP() < hero.getMaxHP() / 4 || dangersAndOpportunes.getFirst().getCount()>=4))
-                        heroesTactics.replace(hero.getId(), new DodgeTactic());
+                    if (hero.getDodgeAbilities()[0].isReady() && world.getMovePhaseNum() == 5 && (hero.getCurrentHP() < hero.getMaxHP() / 4 || dangersAndOpportunes.getFirst().getCount()>=4)) {
+                        Cell target=getGoodDodgeTarget(hero,world);
+                        if (target!=null)
+                            heroesTactics.replace(hero.getId(), new DodgeTactic(target));
+                    }
                     else {
                         boolean weak=hero.getCurrentHP() < hero.getMaxHP() / 5;
                         if (weak) {
@@ -163,8 +164,11 @@ public class ComplexAI implements AbstractAI {
                         }
                     }
                 }
-                else if (payAttentionTo.equals("dodge"))
-                    heroesTactics.replace(hero.getId(), new DodgeTactic());
+                else if (payAttentionTo.equals("dodge")) {
+                    Cell target=getGoodDodgeTarget(hero,world);
+                    if (target!=null)
+                        heroesTactics.replace(hero.getId(), new DodgeTactic(target));
+                }
             }
             Tactic tactic=heroesTactics.get(hero.getId());
             tactic.applyMove(hero,world);

@@ -2,20 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f19f4e2-6a27-4fe2-8f89-b8c0653b20b9" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/ai/StructuredComplexAI.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/TestAI.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/ai/AiFactory.java" afterPath="$PROJECT_DIR$/src/ai/AiFactory.java" />
       <change beforePath="$PROJECT_DIR$/src/ai/ComplexAI.java" afterPath="$PROJECT_DIR$/src/ai/ComplexAI.java" />
-      <change beforePath="$PROJECT_DIR$/src/ai/Danger.java" afterPath="$PROJECT_DIR$/src/ai/Danger.java" />
       <change beforePath="$PROJECT_DIR$/src/ai/Opportunity.java" afterPath="$PROJECT_DIR$/src/ai/Opportunity.java" />
+      <change beforePath="$PROJECT_DIR$/src/ai/StructuredComplexAI.java" afterPath="$PROJECT_DIR$/src/ai/StructuredComplexAI.java" />
       <change beforePath="$PROJECT_DIR$/src/ai/common/Functions.java" afterPath="$PROJECT_DIR$/src/ai/common/Functions.java" />
-      <change beforePath="$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java" afterPath="$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java" />
       <change beforePath="$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java" afterPath="$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java" />
-      <change beforePath="$PROJECT_DIR$/src/ai/tactics/EscapeTactic.java" afterPath="$PROJECT_DIR$/src/ai/tactics/EscapeTactic.java" />
-      <change beforePath="$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java" afterPath="$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java" />
-      <change beforePath="$PROJECT_DIR$/src/ai/tactics/OffendTactic.java" afterPath="$PROJECT_DIR$/src/ai/tactics/OffendTactic.java" />
-      <change beforePath="$PROJECT_DIR$/src/client/AI.java" afterPath="$PROJECT_DIR$/src/client/AI.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,15 +19,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StructuredComplexAI.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ai/StructuredComplexAI.java">
+      <file leaf-file-name="DodgeTactic.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1892">
-              <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
+            <state relative-caret-position="110">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#512#513#0" expanded="true" />
-                <element signature="e#568#569#0" expanded="true" />
+                <element signature="e#303#304#0" expanded="true" />
+                <element signature="e#375#376#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StructuredComplexAI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/StructuredComplexAI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="484">
+              <caret line="47" column="9" lean-forward="true" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#534#535#0" expanded="true" />
+                <element signature="e#590#591#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefenceTactic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java">
+      <file leaf-file-name="ComplexAI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/ComplexAI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state relative-caret-position="22">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,43 +69,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GetToObjZoneTactic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/tactics/GetToObjZoneTactic.java">
+      <file leaf-file-name="Opportunity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/Opportunity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+            <state relative-caret-position="-108">
+              <caret line="47" column="11" lean-forward="false" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HoldOnTactic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/tactics/HoldOnTactic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GetHelpTactic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AiFactory.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AiFactory.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ai/AiFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="110">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -108,11 +92,21 @@
       <file leaf-file-name="Functions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ai/common/Functions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="57" column="20" lean-forward="true" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+            <state relative-caret-position="466">
+              <caret line="208" column="43" lean-forward="true" selection-start-line="208" selection-start-column="43" selection-end-line="208" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HoldOnTactic.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ai/tactics/HoldOnTactic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -223,16 +217,16 @@
         <option value="$PROJECT_DIR$/src/test/TestAI.java" />
         <option value="$PROJECT_DIR$/src/ai/AiFactory.java" />
         <option value="$PROJECT_DIR$/src/ai/Danger.java" />
-        <option value="$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java" />
         <option value="$PROJECT_DIR$/src/ai/tactics/EscapeTactic.java" />
         <option value="$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java" />
-        <option value="$PROJECT_DIR$/src/ai/StructuredComplexAI.java" />
-        <option value="$PROJECT_DIR$/src/ai/ComplexAI.java" />
-        <option value="$PROJECT_DIR$/src/ai/common/Functions.java" />
         <option value="$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java" />
-        <option value="$PROJECT_DIR$/src/ai/Opportunity.java" />
-        <option value="$PROJECT_DIR$/src/client/AI.java" />
         <option value="$PROJECT_DIR$/src/ai/tactics/OffendTactic.java" />
+        <option value="$PROJECT_DIR$/src/ai/Opportunity.java" />
+        <option value="$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java" />
+        <option value="$PROJECT_DIR$/src/ai/ComplexAI.java" />
+        <option value="$PROJECT_DIR$/src/client/AI.java" />
+        <option value="$PROJECT_DIR$/src/ai/common/Functions.java" />
+        <option value="$PROJECT_DIR$/src/ai/StructuredComplexAI.java" />
       </list>
     </option>
   </component>
@@ -609,7 +603,7 @@
       <workItem from="1550646481233" duration="3455000" />
       <workItem from="1550659515271" duration="8211000" />
       <workItem from="1550674871864" duration="20027000" />
-      <workItem from="1550720141011" duration="5354000" />
+      <workItem from="1550720141011" duration="11589000" />
     </task>
     <servers />
   </component>
@@ -646,7 +640,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167719000" />
+    <option name="totallyTimeSpent" value="173954000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -902,38 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/ComplexAI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="64" column="43" lean-forward="true" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#556#557#0" expanded="true" />
-            <element signature="e#584#585#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/tactics/GetToObjZoneTactic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
@@ -944,37 +906,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ai/tactics/HoldOnTactic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
+        <state relative-caret-position="396">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/Opportunity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="57" column="21" lean-forward="false" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/common/Functions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="57" column="20" lean-forward="true" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -990,11 +924,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/AiFactory.java">
+    <entry file="file://$PROJECT_DIR$/src/ai/tactics/DodgeTactic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="110">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#303#304#0" expanded="true" />
+            <element signature="e#375#376#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/tactics/DefenceTactic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/tactics/GetHelpTactic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="21" column="9" lean-forward="false" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/ComplexAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/common/Functions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="208" column="43" lean-forward="true" selection-start-line="208" selection-start-column="43" selection-end-line="208" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/Opportunity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-108">
+          <caret line="47" column="11" lean-forward="false" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ai/StructuredComplexAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="47" column="9" lean-forward="true" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#534#535#0" expanded="true" />
+            <element signature="e#590#591#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1006,15 +1004,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ai/StructuredComplexAI.java">
+    <entry file="file://$PROJECT_DIR$/src/ai/AiFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1892">
-          <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#512#513#0" expanded="true" />
-            <element signature="e#568#569#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="110">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

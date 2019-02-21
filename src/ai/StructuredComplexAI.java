@@ -12,6 +12,7 @@ import util.Tuple;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static ai.common.Functions.*;
 
@@ -28,21 +29,21 @@ public class StructuredComplexAI implements AbstractAI {
         if (world.getCurrentTurn()==0)
             world.pickHero(HeroName.BLASTER);
         else if (world.getCurrentTurn()==1) {
-            if (world.getOppHeroes()[0].getName() != HeroName.BLASTER)
-                world.pickHero(HeroName.HEALER);
-            else
+//            if (world.getOppHeroes()[0].getName() != HeroName.BLASTER)
+//                world.pickHero(HeroName.HEALER);
+//            else
                 world.pickHero(HeroName.BLASTER);
         }
         else if(world.getCurrentTurn()==2){
-            if (world.getOppHeroes()[1].getName()!=HeroName.BLASTER)
-                world.pickHero(HeroName.SENTRY);
-            else
+//            if (world.getOppHeroes()[1].getName()!=HeroName.BLASTER)
+//                world.pickHero(HeroName.SENTRY);
+//            else
                 world.pickHero(HeroName.BLASTER);
         }
         else if (world.getCurrentTurn()==3){
-            if (world.getOppHeroes()[2].getName()!=HeroName.BLASTER)
-                world.pickHero(HeroName.GUARDIAN);
-            else
+//            if (world.getOppHeroes()[2].getName()!=HeroName.BLASTER)
+//                world.pickHero(HeroName.GUARDIAN);
+//            else
                 world.pickHero(HeroName.BLASTER);
         }
 
@@ -69,7 +70,7 @@ public class StructuredComplexAI implements AbstractAI {
         for (Hero hero:liveHeroes)//I assumed if i have Guardian,it has been picked lastly.
             heroesDansAndOpps.put(hero.getId(),getDangersAndOpportunitiesForHero(hero,world,byTeamVisibleEnemies.toArray(new Hero[]{}),heroesDansAndOpps));
         for (Hero hero:liveHeroes){
-            heroesTactics.replace(hero.getId(),resolveTactic(world,hero,heroesTactics,heroesDansAndOpps,liveHeroes,objZone));
+            heroesTactics.replace(hero.getId(),resolveMovePhaseTactic(world,hero,heroesTactics,heroesDansAndOpps,liveHeroes,objZone));
             Tactic tactic=heroesTactics.get(hero.getId());
             tactic.applyMove(hero,world);
         }
@@ -78,17 +79,11 @@ public class StructuredComplexAI implements AbstractAI {
     @Override
     public void actionTurn(World world) {
         System.out.println("action started");
-        for (Hero hero:world.getMyHeroes()) {
-            if (hero.getCurrentHP()==0)
-                continue;
-            List<Danger> dangers=getDangersInActionPhase(world,hero);
-            if (hero.getDodgeAbilities()[0].isReady() && (dangers.size()>4 || (hero.getCurrentHP()<hero.getMaxHP()/4))) {
-                Cell whereToDodge=getGoodDodgeTarget(hero, world);
-                if (whereToDodge!=null) {
-                    world.castAbility(hero, hero.getDodgeAbilities()[0], whereToDodge);
-                    continue;
-                }
-            }
+        Map<Integer,List<Danger>> heroesDangers=new HashMap<>();
+        for (Hero hero:getMyLiveHeroes(world))
+            heroesDangers.put(hero.getId(),getDangersInActionPhase(world,hero));
+        for (Hero hero:getMyLiveHeroes(world)) {
+            heroesTactics.replace(hero.getId(),resolveActionPhaseTactic(world,hero,heroesDangers));
             Tactic tactic = heroesTactics.get(hero.getId());
             tactic.applyAction(hero, world);
         }
