@@ -24,7 +24,8 @@ public class TestAI implements AbstractAI {
             if (path.length!=0)
                 world.moveHero(h,path[0]);
         }
-
+        System.out.println(world.getMap().getCell(100,1000));
+        System.out.println(world.getMap().getCell(-100,0));
     }
 
     @Override

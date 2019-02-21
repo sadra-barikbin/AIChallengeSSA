@@ -10,11 +10,13 @@ import java.util.Random;
 public class AI
 {
 
-
+    private static final String STRUCTURED_COMPLEX="structured-complex";
+    private static final String COMPLEX="complex";
+    private static final String TEST="test";
 
     public void preProcess(World world)
     {
-        AiFactory.getInstance("structured-complex").preProcess(world);
+        AiFactory.getInstance(COMPLEX).preProcess(world);
     }
 
     public void pickTurn(World world)

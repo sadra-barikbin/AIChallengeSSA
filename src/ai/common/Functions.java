@@ -87,19 +87,7 @@ public class Functions {
         }
         return new Tuple<>(dangers,opportunities);
     }
-    public static Cell manhatanicNearestCellEmptyOfFriend(World world,Hero me,Cell[] in,Cell to){
-        Cell best=null;
-        int bestDist=Integer.MAX_VALUE;
-        int candidDist;
-        for (Cell candid:in){
-            candidDist=world.manhattanDistance(candid,to);
-            if ((best==null || candidDist<bestDist)&& (world.getMyHero(candid)==null || world.getMyHero(candid).getId()==me.getId())){
-                best=candid;
-                bestDist=candidDist;
-            }
-        }
-        return best;
-    }
+
     public static Tactic resolveMovePhaseTactic(World world, Hero hero,java.util.Map<Integer,Tactic> lastHeroesTactics, java.util.Map<Integer,Tuple<AVL_tree<Danger>,AVL_tree<Opportunity>>> heroesDansAndOpps,Hero[] liveHeroes,Cell[] objZone){
         if (world.getMovePhaseNum()<3 && !hero.getCurrentCell().isInObjectiveZone() && !(lastHeroesTactics.get(hero.getId()) instanceof GetToObjZoneTactic))
             return new GetToObjZoneTactic(manhatanicNearestCellEmptyOfFriend(world,hero,objZone,hero.getCurrentCell()));
@@ -297,6 +285,19 @@ public class Functions {
                 liveHeroes.add(hero.getCurrentCell());
         return liveHeroes.toArray(new Cell[]{});
     }
+    public static Cell[] getMyLiveHeroesPlacesAndTheirNeighboringButMe(World world,Hero me,int neighboring){
+        AVL_tree<Cell> toRet=new AVL_tree<>();
+        for (Hero hero:getMyLiveHeroes(world)){
+            for (int dRow=-neighboring;dRow<=neighboring;dRow++){
+                for (int dCol=-neighboring;dCol<=neighboring;dCol++){
+                    Cell neighbor=world.getMap().getCell(hero.getCurrentCell().getRow()+dRow,hero.getCurrentCell().getColumn()+dCol);
+                    if (neighbor!=null && !neighbor.equals(me.getCurrentCell()) && !neighbor.isWall())
+                        toRet.addIfNotDuplicate(neighbor);
+                }
+            }
+        }
+        return toRet.in_order_traversal().toArray(new Cell[]{});
+    }
     public static Hero[] getVisibleEnemies(World world){
         List<Hero> byTeamVisibleEnemies=new ArrayList<>();
         for(Hero enemy:world.getOppHeroes()){
@@ -304,5 +305,18 @@ public class Functions {
                 byTeamVisibleEnemies.add(enemy);
         }
         return byTeamVisibleEnemies.toArray(new Hero[]{});
+    }
+    public static Cell manhatanicNearestCellEmptyOfFriend(World world,Hero me,Cell[] in,Cell to){
+        Cell best=null;
+        int bestDist=Integer.MAX_VALUE;
+        int candidDist;
+        for (Cell candid:in){
+            candidDist=world.manhattanDistance(candid,to);
+            if ((best==null || candidDist<bestDist)&& (world.getMyHero(candid)==null || world.getMyHero(candid).getId()==me.getId())){
+                best=candid;
+                bestDist=candidDist;
+            }
+        }
+        return best;
     }
 }

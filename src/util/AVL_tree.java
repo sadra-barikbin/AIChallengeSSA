@@ -140,8 +140,24 @@ public class AVL_tree<T extends Comparable<T>> {
             root.Height=1;
         }
         else
-            push_start_from(root,new_b);
+            push_start_from(root,new_b,false);
         count++;
+    }
+    public boolean addIfNotDuplicate(T b){
+        AVL_node new_b=new AVL_node();
+        new_b.data=b;
+        if (root==null){
+            root=new_b;
+            root.Height=1;
+            count++;
+            return true;
+        }
+        else if(push_start_from(root,new_b,true))
+        {
+            count++;
+            return true;
+        }
+        return false;
     }
     void _delete(AVL_node x){
         if (x==null)
@@ -257,32 +273,47 @@ public class AVL_tree<T extends Comparable<T>> {
             count--;
         }
     }
-    private void push_start_from(AVL_node x,AVL_node neww){
-        _push_start_from(x,neww);
-        check_being_AVL(neww);
+    private boolean push_start_from(AVL_node x,AVL_node neww,boolean preventDuplicate){
+        if(_push_start_from(x,neww,preventDuplicate)) {
+            check_being_AVL(neww);
+            return true;
+        }
+        return false;
     }
-    private void _push_start_from(AVL_node x,AVL_node neww){
-        if (x.data.compareTo(neww.data)>0){
+    private boolean _push_start_from(AVL_node x,AVL_node neww,boolean preventDuplicate){
+        int res=x.data.compareTo(neww.data);
+        if (res>0){
             if (x.l_node==null) {
                 x.l_node = neww;
                 neww.father=x;
             }
             else {
-                _push_start_from(x.l_node, neww);
+                if(_push_start_from(x.l_node, neww,preventDuplicate))
+                {
+                    x.update_height();
+                    return true;
+                }
+                else return false;
             }
 
         }
-        else{
+        else if (res!=0 || !preventDuplicate){
             if (x.r_node==null)
             {
                 x.r_node=neww;
                 neww.father=x;
             }
             else {
-                _push_start_from(x.r_node, neww);
+                if(_push_start_from(x.r_node, neww,preventDuplicate)){
+                    x.update_height();
+                    return true;
                 }
+                else return false;
+            }
         }
+        else return false;
         x.update_height();
+        return true;
     }
     private void L_rotate(AVL_node x) {
         x.r_node.father=x.father;
