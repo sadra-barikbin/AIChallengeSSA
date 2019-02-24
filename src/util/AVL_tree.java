@@ -5,6 +5,7 @@ package util;
 import java.util.ArrayList;
 
 import java.lang.Math;
+import java.util.List;
 
 /**
  * Created by BarikBin_user on 1/25/2017.
@@ -131,6 +132,10 @@ public class AVL_tree<T extends Comparable<T>> {
         }
         else
             return _search(isbn,x.l_node);
+    }
+    public void addAll(List<T> items){
+        for (T t:items)
+            add(t);
     }
     public void add(T b){
         AVL_node new_b=new AVL_node();

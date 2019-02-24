@@ -20,7 +20,7 @@ public class StructuredComplexAI implements AbstractAI {
     private java.util.Map<Integer,Tactic> heroesTactics;
     @Override
     public void preProcess(World world) {
-        System.out.println("preprocess started");
+        System.out.println("preprocess in structuredComplexAI started");
     }
 
     @Override

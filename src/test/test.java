@@ -25,12 +25,7 @@ class test {
         Cell b=tree.search(new Cell(3,2));
         System.out.println(b);
     }
-    @Test
-    void t3(){
-        Opportunity op=new Opportunity(new Cell(3,3),new MockedAbility(AbilityName.BLASTER_BOMB,4),new MockedHero(new Cell(1,1)),new MockedHero(new Cell(5,6)),0,true);
-        Opportunity op2=new Opportunity(new Cell(3,3),new MockedAbility(AbilityName.HEALER_HEAL,4),new MockedHero(new Cell(1,1)),new MockedHero(new Cell(5,6)),0);
-        System.out.println(op.compareTo(op2));
-    }
+
     @Test
     void t4(){
         Cell[] a=new Cell[4];

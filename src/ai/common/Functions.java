@@ -8,6 +8,7 @@ import util.AVL_tree;
 import util.Tuple;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Functions {
@@ -44,7 +45,7 @@ public class Functions {
             for (Ability ability:hero.getOffensiveAbilities()){
                 if ( ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum()+1))) {
                     if(heroSeeEnemy||ability.isLobbing())
-                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getMovePhaseNum(), opportunityIsRisky));
+                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getCurrentPhase(), opportunityIsRisky));
                     else {
                         /*Cell firstCellInPathWithEnemyVisible;
                         Direction[] path=world.getPathMoveDirections(hero.getCurrentCell(),enemy.getCurrentCell(),getMyLiveHeroesPlacesButMe(world,hero));
@@ -55,7 +56,7 @@ public class Functions {
                             pathIndex++;
                         }
                         firstCellInPathWithEnemyVisible=temp;*/
-                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getMovePhaseNum(), opportunityIsRisky,true));
+                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getCurrentPhase(), opportunityIsRisky,true));
                     }
                 }
             }
@@ -65,7 +66,7 @@ public class Functions {
                 if (friend.getCurrentHP()==0)
                     continue;
                 if (friend.getCurrentHP()<friend.getMaxHP()/2 && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell())-(5-world.getMovePhaseNum()+1))
-                    opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend,world.getMovePhaseNum()));
+                    opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend,world.getCurrentPhase()));
             }
         }
         else if (heroesDansAndOppsForGuardianFortify!=null && hero.getName()==HeroName.GUARDIAN && hero.getDefensiveAbilities()[0].isReady()){
@@ -83,7 +84,7 @@ public class Functions {
                 }
             }
             if (mostDeserved!=null)
-                opportunities.add(new Opportunity(mostDeserved.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,mostDeserved,world.getMovePhaseNum()));
+                opportunities.add(new Opportunity(mostDeserved.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,mostDeserved,world.getCurrentPhase()));
         }
         return new Tuple<>(dangers,opportunities);
     }
@@ -140,43 +141,31 @@ public class Functions {
             return new DefenceTactic(bestOpp.type,bestOpp.in);
 
     }
-    public static AVL_tree<Opportunity> getOpportunitiesInActionPhase(World world,Hero hero,java.util.Map<Integer,List<Danger>> heroesDangers){
+    static AVL_tree<Opportunity> getOpportunitiesInActionPhase(World world,Hero hero,java.util.Map<Integer,List<Danger>> heroesDangers){
         AVL_tree<Opportunity> opportunities=new AVL_tree<>();
+        java.util.Map<Ability,List<Opportunity>> offensiveOppsApartByAbilities=new HashMap<>();
+        for (Ability ability:hero.getOffensiveAbilities())
+            offensiveOppsApartByAbilities.put(ability,new ArrayList<>());
         for (Hero enemy:getVisibleEnemies(world)){
             boolean heroSeeEnemy=world.isInVision(hero.getCurrentCell(),enemy.getCurrentCell());
             int distanceBtwMeAndEnemy=world.manhattanDistance(hero.getCurrentCell(),enemy.getCurrentCell());
-            boolean canOffend=false;
-            boolean canDodge=true;
-            for (CastAbility dAbility:world.getOppCastAbilities()){
-                if (dAbility.getAbilityName()==enemy.getDodgeAbilities()[0].getName()) {
-                    canDodge = false;
-                    break;
-                }
-            }
-            AbilityName pastCastAbiName=null;
-            for(CastAbility pastAbility:world.getOppCastAbilities()){
-                if (pastAbility.getCasterId()==enemy.getId()) {
-                    pastCastAbiName=pastAbility.getAbilityName();
-                    break;
-                }
-            }
-            for (Ability ability:enemy.getOffensiveAbilities()){
-                if ((heroSeeEnemy||ability.isLobbing()) && (pastCastAbiName==null||(pastCastAbiName!=ability.getName()))&& ability.getRange()>=distanceBtwMeAndEnemy) {
-                    canOffend = true;
-                }
-            }
-            boolean opportunityIsRisky=canDodge||canOffend;
             for (Ability ability:hero.getOffensiveAbilities()){
                 if ( ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy)) {
-                    if(heroSeeEnemy||ability.isLobbing())
-                        opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, opportunityIsRisky));
+                    if(heroSeeEnemy||ability.isLobbing()) {
+                        Opportunity o=new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getCurrentPhase());
+                        offensiveOppsApartByAbilities.get(ability).add(o);
+                    }
                 }
             }
+        }
+        for (Ability ability:offensiveOppsApartByAbilities.keySet()){
+            opportunities.addAll(clusterifyOpps(world,offensiveOppsApartByAbilities.get(ability)));
+
         }
         if (hero.getName()==HeroName.HEALER && hero.getDefensiveAbilities()[0].isReady()){
             for (Hero friend:getMyLiveHeroes(world)){
                 if (friend.getCurrentHP()<= (friend.getMaxHP()-hero.getDefensiveAbilities()[0].getPower()) && hero.getDefensiveAbilities()[0].getRange()<=world.manhattanDistance(hero.getCurrentCell(),friend.getCurrentCell()))
-                    opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend));
+                    opportunities.add(new Opportunity(friend.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,friend,world.getCurrentPhase()));
             }
         }
         else if (hero.getName()==HeroName.GUARDIAN && hero.getDefensiveAbilities()[0].isReady()){
@@ -194,7 +183,7 @@ public class Functions {
                 }
             }
             if (mostDeserved!=null)
-                opportunities.add(new Opportunity(mostDeserved.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,mostDeserved));
+                opportunities.add(new Opportunity(mostDeserved.getCurrentCell(),hero.getDefensiveAbilities()[0],hero,mostDeserved,world.getCurrentPhase()));
         }
         return opportunities;
     }
@@ -318,5 +307,175 @@ public class Functions {
             }
         }
         return best;
+    }
+    private static List<Opportunity> clusterifyOpps(World world,List<Opportunity> opportunities){
+        //I know that the list's length would not be more than 4
+        if (opportunities.size()<=1)
+            return opportunities;
+        if (opportunities.size()==2){
+            int dist=world.manhattanDistance(opportunities.get(0).in,opportunities.get(1).in);
+            if (dist>4)
+                return opportunities;
+            ArrayList<Opportunity> res=new ArrayList<>();
+            int meanHealth=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(1).aimHero.getCurrentHP())/2;
+            if (dist<=2){
+                res.add(new Opportunity(opportunities.get(0).in,opportunities.get(0).type,opportunities.get(0).forr,world.getCurrentPhase(),2,meanHealth));
+                return res;
+            }
+            Cell mixedCell=world.getMap().getCell((opportunities.get(0).in.getRow()+opportunities.get(1).in.getRow())/2,(opportunities.get(0).in.getColumn()+opportunities.get(1).in.getColumn())/2);
+            Opportunity mixed=new Opportunity(mixedCell,opportunities.get(0).type,opportunities.get(0).forr,world.getCurrentPhase(),2,meanHealth);
+            res.add(mixed);
+            return res;
+        }
+        else if (opportunities.size()==3){
+            int dist01=world.manhattanDistance(opportunities.get(0).in,opportunities.get(1).in);
+            int dist12=world.manhattanDistance(opportunities.get(1).in,opportunities.get(2).in);
+            int dist20=world.manhattanDistance(opportunities.get(2).in,opportunities.get(0).in);
+            ArrayList<Opportunity> res=new ArrayList<>();
+            int range=opportunities.get(0).type.getAreaOfEffect();
+            int whoBecomesAlone;
+            if (dist01>2*range){
+                if (dist12>2*range){
+                    if (dist20>2*range){
+                        return opportunities;
+                    }
+                    else {
+                        whoBecomesAlone=1;
+                    }
+                }
+                else {
+                    if (dist20>2*range){
+                        whoBecomesAlone=0;
+                    }
+                    else {
+                        int meanHealth12=(opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                        int meanHealth20=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                        if (meanHealth12<=meanHealth20){
+                            whoBecomesAlone=0;
+                        }
+                        else {
+                            whoBecomesAlone=1;
+                        }
+                    }
+                }
+            }
+            else {
+                if (dist12>2*range){
+                    if (dist20>2*range){
+                        whoBecomesAlone=2;
+                    }
+                    else {
+                        int meanHealth01=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(1).aimHero.getCurrentHP())/2;
+                        int meanHealth20=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                        if (meanHealth01<=meanHealth20){
+                            whoBecomesAlone=2;
+                        }
+                        else {
+                            whoBecomesAlone=1;
+                        }
+                    }
+                }
+                else {
+                    if (dist20>2*range){
+                        int meanHealth01=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(1).aimHero.getCurrentHP())/2;
+                        int meanHealth12=(opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                        if (meanHealth01<=meanHealth12){
+                            whoBecomesAlone=2;
+                        }
+                        else {
+                            whoBecomesAlone=0;
+                        }
+                    }
+                    else{
+                        double exactMeanRow=(opportunities.get(0).in.getRow()+opportunities.get(1).in.getRow()+opportunities.get(2).in.getRow())/3.0;
+                        double exactMeanColumn=(opportunities.get(0).in.getColumn()+opportunities.get(1).in.getColumn()+opportunities.get(2).in.getColumn())/3.0;
+                        System.out.println(exactMeanRow+","+exactMeanColumn);
+                        int meanRow;
+                        int meanColumn;
+                        if (exactMeanRow-Math.floor(exactMeanRow)==0.5&&exactMeanColumn-Math.floor(exactMeanColumn)==0.5){
+                            meanRow=(int)exactMeanRow;
+                            meanColumn=(int)exactMeanColumn;
+                        }
+                        else if (exactMeanRow-Math.floor(exactMeanRow)<=0.5) {
+                            if (exactMeanColumn - Math.floor(exactMeanColumn) <= 0.5) {
+                                meanRow = (int) exactMeanRow - 1;
+                                meanColumn = (int) exactMeanColumn;
+                            } else {
+                                meanRow = (int) exactMeanRow;
+                                meanColumn = (int) exactMeanColumn + 1;
+                            }
+                        }else {
+                            if (exactMeanColumn - Math.floor(exactMeanColumn) <= 0.5){
+                                meanRow = (int) exactMeanRow ;
+                                meanColumn = (int) exactMeanColumn-1;
+                            }
+                            else{
+                                meanRow = (int) exactMeanRow + 1;
+                                meanColumn = (int) exactMeanColumn;
+                            }
+                        }
+                        Cell mean012=world.getMap().getCell(meanRow,meanColumn);
+                        boolean canMix=true;
+                        for(Opportunity opp:opportunities){
+                            if (world.manhattanDistance(opp.in,mean012)>range)
+                                canMix=false;
+                        }
+                        if (canMix){
+                            System.out.println("bettrekoon: "+mean012.getRow()+","+mean012.getColumn());
+                            int meanHealth012=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/3;
+                            res.add(new Opportunity(mean012,opportunities.get(0).type,opportunities.get(0).forr,world.getCurrentPhase(),3,meanHealth012));
+                            return res;
+                        }
+                        else {
+                            int meanHealth01=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(1).aimHero.getCurrentHP())/2;
+                            int meanHealth12=(opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                            int meanHealth20=(opportunities.get(2).aimHero.getCurrentHP()+opportunities.get(0).aimHero.getCurrentHP())/2;
+                            if (meanHealth01<Math.min(meanHealth12,meanHealth20)){
+                                whoBecomesAlone=2;
+                            }
+                            else if (meanHealth12<Math.min(meanHealth01,meanHealth20)){
+                                whoBecomesAlone=0;
+                            }
+                            else {
+                                whoBecomesAlone=1;
+                            }
+                        }
+                    }
+                }
+            }
+            if (whoBecomesAlone==0){
+                res.add(opportunities.get(0));
+                int meanHealth=(opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                Cell mixedCell=world.getMap().getCell((opportunities.get(1).in.getRow()+opportunities.get(2).in.getRow())/2,(opportunities.get(1).in.getColumn()+opportunities.get(2).in.getColumn())/2);
+                System.out.println("0 tanhast .hadaf:"+mixedCell.getRow()+","+mixedCell.getColumn());
+                Opportunity mixed=new Opportunity(mixedCell,opportunities.get(1).type,opportunities.get(1).forr,world.getCurrentPhase(),2,meanHealth);
+                res.add(mixed);
+                return res;
+            }
+            else if (whoBecomesAlone==1){
+                res.add(opportunities.get(1));
+                int meanHealth=(opportunities.get(0).aimHero.getCurrentHP()+opportunities.get(2).aimHero.getCurrentHP())/2;
+                Cell mixedCell=world.getMap().getCell((opportunities.get(0).in.getRow()+opportunities.get(2).in.getRow())/2,(opportunities.get(0).in.getColumn()+opportunities.get(2).in.getColumn())/2);
+                System.out.println("1 tanhast .hadaf:"+mixedCell.getRow()+","+mixedCell.getColumn());
+                Opportunity mixed=new Opportunity(mixedCell,opportunities.get(0).type,opportunities.get(0).forr,world.getCurrentPhase(),2,meanHealth);
+                res.add(mixed);
+                return res;
+            }
+            else if (whoBecomesAlone==2){
+                res.add(opportunities.get(2));
+                int meanHealth=(opportunities.get(1).aimHero.getCurrentHP()+opportunities.get(0).aimHero.getCurrentHP())/2;
+                Cell mixedCell=world.getMap().getCell((opportunities.get(1).in.getRow()+opportunities.get(0).in.getRow())/2,(opportunities.get(1).in.getColumn()+opportunities.get(0).in.getColumn())/2);
+                System.out.println("2 tanhast .hadaf:"+mixedCell.getRow()+","+mixedCell.getColumn());
+                Opportunity mixed=new Opportunity(mixedCell,opportunities.get(1).type,opportunities.get(1).forr,world.getCurrentPhase(),2,meanHealth);
+                res.add(mixed);
+                return res;
+            }
+            else {
+                System.out.println("nashod ke");
+                return opportunities;
+            }
+        }
+        else return opportunities;
+        //TODo age chahar ta bood forsata
     }
 }
