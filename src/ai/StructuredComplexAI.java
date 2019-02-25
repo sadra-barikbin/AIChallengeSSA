@@ -38,13 +38,15 @@ public class StructuredComplexAI implements AbstractAI {
 //            if (world.getOppHeroes()[1].getName()!=HeroName.BLASTER)
 //                world.pickHero(HeroName.SENTRY);
 //            else
-                world.pickHero(HeroName.BLASTER);
+//                world.pickHero(HeroName.BLASTER);
+            world.pickHero(HeroName.HEALER);
         }
         else if (world.getCurrentTurn()==3){
 //            if (world.getOppHeroes()[2].getName()!=HeroName.BLASTER)
 //                world.pickHero(HeroName.GUARDIAN);
 //            else
-                world.pickHero(HeroName.BLASTER);
+                //world.pickHero(HeroName.BLASTER);
+            world.pickHero(HeroName.HEALER);
         }
 
     }

@@ -30,6 +30,7 @@ public class OffendTactic extends Tactic {
         Direction togo=null;
         if (this.toGo==null) {
             Cell[] liveHeroesPlacesButMe = Functions.getMyLiveHeroesPlacesButMe(world,hero);
+
             Direction[] path=world.getPathMoveDirections(hero.getCurrentCell(),aimCell,liveHeroesPlacesButMe);
             if (path.length!=0)togo=path[0];
         }

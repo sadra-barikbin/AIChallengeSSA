@@ -124,7 +124,7 @@ public class Functions {
 //        }
     }
     public static Tactic resolveActionPhaseTactic(World world,Hero hero,java.util.Map<Integer,List<Danger>> heroesDangers){
-        if (hero.getDodgeAbilities()[0].isReady() && (heroesDangers.get(hero.getId()).size()>4 || (hero.getCurrentHP()<hero.getMaxHP()/4))) {
+        if (world.getAP()>=hero.getDodgeAbilities()[0].getAPCost()&& hero.getDodgeAbilities()[0].isReady() && (heroesDangers.get(hero.getId()).size()>4 || (hero.getCurrentHP()<hero.getMaxHP()/4))) {
                 Cell whereToDodge=getGoodDodgeTarget(hero, world);
                 if (whereToDodge!=null) {
                     world.castAbility(hero, hero.getDodgeAbilities()[0], whereToDodge);
@@ -133,6 +133,13 @@ public class Functions {
         }
         AVL_tree<Opportunity> opportunities=getOpportunitiesInActionPhase(world,hero,heroesDangers);
         Opportunity bestOpp=opportunities.getMax();
+        if (bestOpp!=null)opportunities.delete(bestOpp);
+        if (bestOpp!=null && bestOpp.type.getAPCost()>world.getAP()){
+            while (bestOpp!= null && bestOpp.type.getAPCost()>world.getAP()){
+                bestOpp=opportunities.getMax();
+                if (bestOpp!=null)opportunities.delete(bestOpp);
+            }
+        }
         if (bestOpp==null)
             return new HoldOnTactic(hero.getCurrentCell());
         if (bestOpp.type.getType()==AbilityType.OFFENSIVE)
@@ -277,8 +284,12 @@ public class Functions {
     public static Cell[] getMyLiveHeroesPlacesAndTheirNeighboringButMe(World world,Hero me,int neighboring){
         AVL_tree<Cell> toRet=new AVL_tree<>();
         for (Hero hero:getMyLiveHeroes(world)){
+            if (hero.getId()==me.getId())
+                continue;
             for (int dRow=-neighboring;dRow<=neighboring;dRow++){
                 for (int dCol=-neighboring;dCol<=neighboring;dCol++){
+                    if (Math.abs(dRow)+Math.abs(dCol)>neighboring)
+                        continue;
                     Cell neighbor=world.getMap().getCell(hero.getCurrentCell().getRow()+dRow,hero.getCurrentCell().getColumn()+dCol);
                     if (neighbor!=null && !neighbor.equals(me.getCurrentCell()) && !neighbor.isWall())
                         toRet.addIfNotDuplicate(neighbor);

@@ -13,6 +13,7 @@ public class AI
     private static final String STRUCTURED_COMPLEX="structured-complex";
     private static final String COMPLEX="complex";
     private static final String TEST="test";
+    private static final String SIMPLE="simple";
 
     public void preProcess(World world)
     {
