@@ -28,16 +28,9 @@ class test {
 
     @Test
     void t4(){
-        Cell[] a=new Cell[4];
-        a[0]=new Cell(2,1);
-        a[1]=new Cell(3,2);
-        a[2]=new Cell(2,4);
-        a[3]=new Cell(2,1);
-        Arrays.sort(a);
-        for (Cell c:a) {
-            System.out.printf("%d %d\n",c.getRow(),c.getColumn());
-        }
-
+        System.out.println(Math.round(3.6));
+        System.out.println(Math.round(3.4));
+        System.out.println(Math.round(3.51));
     }
 
 }

@@ -43,7 +43,7 @@ public class Functions {
             }
             boolean opportunityIsRisky=canDodge||canOffend;
             for (Ability ability:hero.getOffensiveAbilities()){
-                if ( ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum()+1))) {
+                if ( ability.isReady() && (ability.getRange()+ability.getAreaOfEffect()>=distanceBtwMeAndEnemy-(5-world.getMovePhaseNum()+1))) {
                     if(heroSeeEnemy||ability.isLobbing())
                         opportunities.add(new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getCurrentPhase(), opportunityIsRisky));
                     else {
@@ -157,9 +157,46 @@ public class Functions {
             boolean heroSeeEnemy=world.isInVision(hero.getCurrentCell(),enemy.getCurrentCell());
             int distanceBtwMeAndEnemy=world.manhattanDistance(hero.getCurrentCell(),enemy.getCurrentCell());
             for (Ability ability:hero.getOffensiveAbilities()){
-                if ( ability.isReady() && (ability.getRange()>=distanceBtwMeAndEnemy)) {
+                if ( ability.isReady() && (ability.getRange()+ability.getAreaOfEffect()>=distanceBtwMeAndEnemy)) {
                     if(heroSeeEnemy||ability.isLobbing()) {
-                        Opportunity o=new Opportunity(enemy.getCurrentCell(), ability, hero, enemy, world.getCurrentPhase());
+                        Cell aimCell=enemy.getCurrentCell();
+                        if (ability.getRange()<distanceBtwMeAndEnemy){
+                            System.out.println("azizam");
+                            System.out.println("ability AF:"+ability.getAreaOfEffect());
+                            System.out.println("myHero:"+hero.getCurrentCell().getRow()+","+hero.getCurrentCell().getColumn());
+                            System.out.println("aimCell avvaliye:"+aimCell.getRow()+","+aimCell.getColumn());
+                            if (hero.getCurrentCell().getColumn()==aimCell.getColumn()){
+                                if (aimCell.getRow()>hero.getCurrentCell().getRow())
+                                    aimCell=world.getMap().getCell(aimCell.getRow()-ability.getAreaOfEffect(),aimCell.getColumn());
+                                else
+                                    aimCell=world.getMap().getCell(aimCell.getRow()+ability.getAreaOfEffect(),aimCell.getColumn());
+                            }
+                            else {
+                                double slope = -((double)hero.getCurrentCell().getRow() - aimCell.getRow()) / ((double) hero.getCurrentCell().getColumn() - aimCell.getColumn());
+                                double deltaCol;
+                                double deltaRow;
+                                if (hero.getCurrentCell().getColumn() >aimCell.getColumn()) {
+                                    if (hero.getCurrentCell().getRow()>aimCell.getRow()){
+                                        deltaCol = ability.getAreaOfEffect() / (1.0 - slope);
+                                    }
+                                    else {
+                                        deltaCol=ability.getAreaOfEffect()/(slope+1.0);
+                                    }
+                                }
+                                else {
+                                    if (hero.getCurrentCell().getRow()>aimCell.getRow()){
+                                        deltaCol = -ability.getAreaOfEffect() / (1.0 - slope);
+                                    }
+                                    else {
+                                        deltaCol=ability.getAreaOfEffect()/(slope-1.0);
+                                    }
+                                }
+                                deltaRow=-slope*deltaCol;
+                                aimCell=world.getMap().getCell(aimCell.getRow()+(int)Math.round(deltaRow),aimCell.getColumn()+(int)Math.round(deltaCol));
+                            }
+                            System.out.println("aimCell sanaviie:"+aimCell.getRow()+","+aimCell.getColumn());
+                        }
+                        Opportunity o=new Opportunity(aimCell, ability, hero, enemy, world.getCurrentPhase());
                         offensiveOppsApartByAbilities.get(ability).add(o);
                     }
                 }
