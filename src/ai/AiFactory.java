@@ -10,6 +10,10 @@ public class AiFactory {
         modeSelected=true;
         if(ourInstance==null){
             switch (AiMode){
+                case "more-structured-complex":{
+                    ourInstance=new MoreStructuredComplexAI();
+                    break;
+                }
                 case "complex":{
                     ourInstance=new ComplexAI();
                     break;

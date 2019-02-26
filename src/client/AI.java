@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class AI
 {
-
+    private static final String MORE_STRUCTURED_COMPLEX="more-structured-complex";
     private static final String STRUCTURED_COMPLEX="structured-complex";
     private static final String COMPLEX="complex";
     private static final String TEST="test";
@@ -17,7 +17,7 @@ public class AI
 
     public void preProcess(World world)
     {
-        AiFactory.getInstance(STRUCTURED_COMPLEX).preProcess(world);
+        AiFactory.getInstance(MORE_STRUCTURED_COMPLEX).preProcess(world);
     }
 
     public void pickTurn(World world)

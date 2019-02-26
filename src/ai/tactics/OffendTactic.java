@@ -25,7 +25,7 @@ public class OffendTactic extends Tactic {
 
     @Override
     public void applyMove(Hero hero, World world) {
-        if(world.manhattanDistance(hero.getCurrentCell(),aimCell)<=toApply.getRange()+toApply.getAreaOfEffect())
+        if(world.manhattanDistance(hero.getCurrentCell(),aimCell)<=toApply.getRange()+toApply.getAreaOfEffect()&&(hero.getCurrentCell().isInObjectiveZone()|| !aimCell.isInObjectiveZone()))
             return;
         Direction togo=null;
         if (this.toGo==null) {
